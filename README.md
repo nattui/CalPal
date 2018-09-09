@@ -1,4 +1,4 @@
-# Spartan CalPal
+# Spartan CalPal &middot; ![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)
 Managing Calories for Health Conscious People
 
 ## License
