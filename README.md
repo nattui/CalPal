@@ -5,4 +5,4 @@ Managing Calories for Health Conscious People
 All parts of CalPal are free to use and abuse under the open-source MIT license.
 
 ## Acknowledgement
-CalPal was created by [Nhat Nguyen](https://github.com/nguyen-nhat), [Albert Ong](), and [Jackson Truong].
+CalPal was created by [Nhat Nguyen](https://github.com/nguyen-nhat), [Albert Ong](), and [Jackson Truong]().
