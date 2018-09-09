@@ -1,0 +1,13 @@
+$primary-color: black;
+$accent-color: navy;
+
+$colors: (
+  primary: black,
+  accent: navy
+);
+
+body, p {
+  background-color: map-get($colors, primary);
+  margin: 0px;
+  color: white;
+}
