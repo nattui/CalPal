@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Files with "export-ignore" are excluded from download
+.gitattributes export-ignore
+.gitignore export-ignore
+README.md export-ignore
