@@ -16,7 +16,9 @@ Managing Calories for Health Conscious People
 
 **Back-end**
 * [Python](https://www.python.org/)
-* [Flask](http://flask.pocoo.org/)
+* [Flask](http://flask.pocoo.org/) // Micro Web Framework 
+* [Pandas](https://pandas.pydata.org/) // Data manipulation 
+* [Jinja2](http://jinja.pocoo.org/) // Template Engine 
 
 **Et Cetera**
 * [Git](https://git-scm.com/)
@@ -25,6 +27,24 @@ Managing Calories for Health Conscious People
 * [Visual Studio Code](https://code.visualstudio.com/) // Code Editor 
   * [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) // Local Server with live reload
   * [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) // Compile Sass or Scss to CSS 
+
+## Getting Started
+Open command line
+```shell
+pip install flask
+pip install pandas
+```
+
+Then navigate to the project
+```shell
+cd C:\Users\Name\Desktop\CalPal
+```
+
+Run app.py
+```shell
+cd project
+python app.py
+```
 
 ## License
 All parts of CalPal are free to use and abuse under the open-source MIT license.
