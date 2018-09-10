@@ -1,0 +1,192 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.form-wrapper {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-color: orangered;
+  border-style: dotted;
+  border-width: 1px;
+}
+
+.main, .form-container .center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+html, body, form {
+  height: 100%;
+  width: 100%;
+}
+
+html, body {
+  min-height: 100%;
+  background-color: #f8f8f8;
+  background-attachment: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main {
+  min-height: inherit;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: inherit;
+}
+
+.form-wrapper {
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
+}
+
+.form-container {
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 50px 0px #e6e6e6;
+          box-shadow: 0px 0px 50px 0px #e6e6e6;
+  background-color: white;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 580px;
+  text-align: center;
+}
+
+.form-container h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 10px 0px 10px 0px;
+}
+
+.form-container h2 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.form-container p {
+  color: black;
+  font-size: 16px;
+}
+
+.form-container a {
+  text-decoration: none;
+  color: black;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.form-container a:hover {
+  color: #098ccd;
+}
+
+form input[type="email"], form input[type="password"], form button[type="submit"] {
+  margin-top: 20px;
+  padding-left: 4px;
+  border: 1px solid #f0f0f0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+form input[type="email"]:hover, form input[type="password"]:hover {
+  padding-left: 10px;
+}
+
+form input[type="email"]:focus, form input[type="password"]:focus {
+  border-color: #098ccd;
+}
+
+form input::-webkit-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input:-ms-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input::-ms-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input::placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form button[type="submit"] {
+  margin-bottom: 10px;
+  background-color: #14aaf5;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+form button[type="submit"]:hover {
+  background-color: #0a9ce6;
+}
+
+form button[type="submit"]:focus {
+  background-color: #098ccd;
+  padding-top: 5px;
+}
+/*# sourceMappingURL=master.css.map */
