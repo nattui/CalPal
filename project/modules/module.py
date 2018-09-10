@@ -1,10 +1,6 @@
 # Python file
 
-# Import pandas
-# from reader import login, checkEmail, checkPassword
-import sys
-sys.path.append('/')
-import reader
+from reader import login, checkEmail, checkPassword
 
 # Developer Space
 print()
