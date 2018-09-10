@@ -1,5 +1,6 @@
 # Spartan CalPal &middot; [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/nguyen-nhat/CalPal/blob/master/LICENSE)
 Managing Calories for Health Conscious People
+
 ![CalPal Screenshot Image](https://raw.githubusercontent.com/nguyen-nhat/CalPal/master/screenshot.png)
 
 ## Technologies and Tools
