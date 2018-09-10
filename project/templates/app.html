@@ -1,0 +1,33 @@
+<!-- Shows login form -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main">
+
+  <!-- Form container -->
+  <div class="form-container">
+    <div class="form-wrapper">
+
+      <div class="center">
+        <div>
+          <h1><a href="{{ url_for('main.home') }}">CalPal</a></h1>
+          <h2>Managing Calories for Health Conscious People</h2>
+          <p>Log in</p>
+        </div>
+      </div>
+
+      <!-- Shows user information -->
+      <p><b>Email: </b>{{ email }}</p>
+      <p><b>Password:</b> {{ "*" * password|length }}</p>
+      <p><b>Password: </b>{{ password }}</p>
+
+      <form>
+        <button type="submit">Log In</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
