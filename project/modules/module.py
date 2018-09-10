@@ -1,8 +1,7 @@
-# Python file
+# Developer Space for Python code
 
 from reader import checkLogin, checkEmail, checkPassword
 
-# Developer Space
 print()
 print()
 print()
