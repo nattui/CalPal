@@ -1,6 +1,7 @@
 # CalPal Files
 .DS_Store
 .vscode/
+database/database.xlsx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
