@@ -96,6 +96,14 @@ html, body {
     color: darken($accent-color, 10%);
   }
 
+  .failure {
+    @extend %flexbox;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 2px;
+    background-color: #ffedef;
+  }
+
 }
 
 // Form
@@ -134,7 +142,7 @@ form {
   button[type="submit"] {
     margin-bottom: $form-margin;
     background-color: $accent-color;
-    border-radius: 5px;
+    border-radius: 2px;
     border: none;
     color: white;
     font-weight: bolder;
