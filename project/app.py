@@ -1,4 +1,4 @@
-# This is where the python and flask code occupies
+# This is where the python flask code occupies
 
 from flask import Flask, render_template, redirect, url_for, request, Blueprint, session
 from modules.reader import checkLogin
@@ -12,9 +12,6 @@ main = Blueprint("main", __name__)
 @main.route("/")
 def home():
   return render_template("login.html")
-
-
-import pandas as pd
 
 # User login logic
 @main.route("/app", methods=["GET", "POST"])
