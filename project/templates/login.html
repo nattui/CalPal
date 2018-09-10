@@ -1,0 +1,46 @@
+<!-- Shows login form -->
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="main">
+  
+    <!-- Form container -->
+    <div class="form-container">
+      <div class="form-wrapper">
+  
+        <div class="center">
+          <div>
+            <h1><a href="{{ url_for("main.home") }}">CalPal</a></h1>
+            <h2>Managing Calories for Health Conscious People</h2>
+            <p>Log in</p>
+          </div>
+        </div>
+  
+        <div class="center">
+          <!-- Form method="POST" -->
+          <form method="POST" action="{{ url_for("main.login") }}">
+  
+            <!-- Email -->
+            <div class="center">
+              <input type="email" name="email" placeholder="Email" spellcheck="false" autofocus required>
+            </div>
+  
+            <!-- Password -->
+            <div class="center">
+              <input type="password" name="password" placeholder="Password" spellcheck="false" required>
+            </div>
+  
+            <!-- Submit -->
+            <div class="center">
+              <button type="submit">Log In</button>
+            </div>
+  
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  
+  </div>
+
+{% endblock %}
