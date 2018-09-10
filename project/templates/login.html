@@ -13,6 +13,11 @@
             <h1><a href="{{ url_for("main.home") }}">CalPal</a></h1>
             <h2>Managing Calories for Health Conscious People</h2>
             <p>Log in</p>
+
+            {% if loginFailure is defined %}
+              <p>The username or password is not correct.</p>
+            {% endif %}
+
           </div>
         </div>
   
