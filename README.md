@@ -2,21 +2,21 @@
 Managing Calories for Health Conscious People
 
 ## Technologies and Tools
-Design
+**Design**
 * [Mockplus](https://www.mockplus.com/) // Prototype and Wireframe tool
 * [draw.io](https://www.draw.io/) // Diagram tool
 
-Front-end
+**Front-end**
 * HTML
 * CSS
   * [Sass](https://sass-lang.com/) // CSS preprocessor
 * JavaScript
 
-Back-end
+**Back-end**
 * [Python](https://www.python.org/)
 * [Flask](http://flask.pocoo.org/)
 
-Et Cetera
+**Et Cetera**
 * [Git](https://git-scm.com/)
   * [GitHub](https://github.com/) // Version Control
   * [GitHub Desktop](https://desktop.github.com/) // Git GUI
