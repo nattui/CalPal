@@ -9,41 +9,42 @@
       <div class="form-wrapper">
   
         <div class="center">
-          <div>
+          <div class="form-header">
             <h1><a href="{{ url_for("main.home") }}">CalPal</a></h1>
             <h2>Managing Calories for Health Conscious People</h2>
-            <p>Log in</p>
-
-            {% if loginFailure is defined %}
-              <div class="failure">
-                <p>The username or password is not correct.</p>
-              </div>
-            {% endif %}
-
+            <p>- Log in -</p>
           </div>
         </div>
   
-        <div class="center">
-          <!-- Form method="POST" -->
-          <form method="POST" action="{{ url_for("main.login") }}">
-  
-            <!-- Email -->
-            <div class="center">
-              <input type="email" name="email" placeholder="Email" spellcheck="false" autofocus required>
-            </div>
-  
-            <!-- Password -->
-            <div class="center">
-              <input type="password" name="password" placeholder="Password" spellcheck="false" required>
-            </div>
-  
-            <!-- Submit -->
-            <div class="center">
-              <button type="submit">Log In</button>
-            </div>
-  
-          </form>
+        <!-- Error message appears -->
+        {% if loginFailure is defined %}
+        <div class="failure">
+          <p>Incorrect email or password combination.</p>
         </div>
+        {% endif %}
+
+        <!-- Form method="POST" -->
+        <form method="POST" action="{{ url_for("main.login") }}">
+
+          <!-- Email -->
+          <div class=input-label>
+            <label>Email Address</label>
+            <span>*</span>
+          </div>
+          <input type="email" name="email" placeholder="name@company.com" spellcheck="false" autofocus required>
+
+          <!-- Password -->
+          <div class=input-label>
+            <label>Password</label>
+            <span>*</span>
+          </div>
+          <input type="password" name="password" placeholder="Password" spellcheck="false" required>
+
+          <!-- Submit -->
+          <button type="submit">Log In</button>
+
+        </form>
+
   
       </div>
     </div>
