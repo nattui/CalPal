@@ -1,6 +1,6 @@
 # Python file
 
-from reader import login, checkEmail, checkPassword
+from reader import checkLogin, checkEmail, checkPassword
 
 # Developer Space
 print()
@@ -17,4 +17,4 @@ print("Password:", checkPassword(email, 'pe'))
 print("Password:", checkPassword(email, 'Dog1'))
 
 print()
-print("Login:", login(email, password))
+print("Login:", checkLogin(email, password))
