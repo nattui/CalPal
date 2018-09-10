@@ -15,7 +15,9 @@
             <p>Log in</p>
 
             {% if loginFailure is defined %}
-              <p>The username or password is not correct.</p>
+              <div class="failure">
+                <p>The username or password is not correct.</p>
+              </div>
             {% endif %}
 
           </div>
