@@ -1,0 +1,153 @@
+// Sass file 
+
+// TODO: form-wrapper
+
+@import 'reset';
+
+$background-color: #f8f8f8;
+$accent-color: #14aaf5;
+$form-margin: 10px;
+
+// CSS Layout debugging
+%debug {
+  box-sizing: border-box;
+  border-color: orangered;
+  border-style: dotted;
+  border-width: 1px;
+}
+
+// Centering elements
+%flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Fills the entire container
+%fill-container {
+  height: 100%;
+  width: 100%;
+}
+
+// Stretch elements to fit the whole browser window 
+html, body {
+  @extend %fill-container;
+  min-height: 100%;
+  background-color: $background-color;
+  background-attachment: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  // background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+
+// Content
+.main {
+  @extend %flexbox;
+  min-height: inherit;
+  box-sizing: border-box;
+  width: inherit;
+}
+
+.form-wrapper {
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
+  @extend %debug;
+}
+
+// Form Container
+.form-container {
+  border-radius: 2px;
+  box-shadow: 0px 0px 50px 0px darken(white, 10%);
+  background-color: white;
+  // height: 500px;
+  box-sizing: border-box;
+  
+  // min-height: 400px;
+  width: 580px;
+  text-align: center;
+
+  .center {
+    @extend %flexbox;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: $form-margin 0px 10px 0px; 
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 30px; 
+  }
+
+  p {
+    color: black;
+    font-size: 16px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    transition: 0.25s;
+  }
+
+  a:hover {
+    color: darken($accent-color, 10%);
+  }
+
+}
+
+// Form
+form {
+  @extend %fill-container;
+  
+    // Form input fields 
+  input[type="email"], input[type="password"], button[type="submit"] {
+    margin-top: 20px;
+    padding-left: 4px;
+    border: 1px solid rgb(240, 240, 240);
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    transition: 0.25s;
+  }
+
+  input[type="email"]:hover, input[type="password"]:hover {
+    // border-left: 3px solid $accent-color;
+    // border-color: $accent-color;
+    padding-left: 10px;
+  }
+
+  input[type="email"]:focus, input[type="password"]:focus {
+    border-color: darken($accent-color, 10%);
+  }
+
+  // Form placeholder text color
+  input::placeholder {
+   color: #d9d9d9;
+   padding-left: 2px; 
+  }
+
+  // Buttom with submit type
+  button[type="submit"] {
+    margin-bottom: $form-margin;
+    background-color: $accent-color;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: darken($accent-color, 5%);
+  }
+
+  button[type="submit"]:focus {
+    background-color: darken($accent-color, 10%);
+    padding-top: 5px;
+  }
+
+}
