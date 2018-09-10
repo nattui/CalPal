@@ -6,7 +6,7 @@
 
 $background-color: #f8f8f8;
 $accent-color: #14aaf5;
-$form-margin: 10px;
+$form-margin: 10%;
 
 // CSS Layout debugging
 %debug {
@@ -51,7 +51,7 @@ html, body {
   margin: 0 auto;
   height: 100%;
   width: 80%;
-  @extend %debug;
+  // @extend %debug;
 }
 
 // Form Container
