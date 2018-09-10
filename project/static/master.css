@@ -47,7 +47,7 @@ table {
   border-spacing: 0;
 }
 
-.main, .form-container .center {
+.main, .form-container .center, .form-container .failure {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,6 +122,13 @@ html, body {
   color: #098ccd;
 }
 
+.form-container .failure {
+  height: 40px;
+  margin-top: 20px;
+  border-radius: 2px;
+  background-color: #ffedef;
+}
+
 form input[type="email"], form input[type="password"], form button[type="submit"] {
   margin-top: 20px;
   padding-left: 4px;
@@ -166,7 +173,7 @@ form input::placeholder {
 form button[type="submit"] {
   margin-bottom: 10%;
   background-color: #14aaf5;
-  border-radius: 5px;
+  border-radius: 2px;
   border: none;
   color: white;
   font-weight: bolder;
