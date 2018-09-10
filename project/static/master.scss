@@ -51,18 +51,14 @@ html, body {
   margin: 0 auto;
   height: 100%;
   width: 70%;
-  // @extend %debug;
 }
 
 // Form Container
 .form-container {
-  border-radius: 2px;
+  border-radius: 5px;
   box-shadow: 0px 0px 50px 0px darken(white, 10%);
   background-color: white;
-  // height: 500px;
   box-sizing: border-box;
-  
-  // min-height: 400px;
   width: 580px;
   text-align: center;
 
@@ -150,11 +146,11 @@ form {
   }
 
   button[type="submit"]:hover {
-    background-color: darken($accent-color, 5%);
+    background-color: darken($accent-color, 10%);
   }
 
   button[type="submit"]:focus {
-    background-color: darken($accent-color, 10%);
+    background-color: darken($accent-color, 15%);
     padding-top: 5px;
   }
 
