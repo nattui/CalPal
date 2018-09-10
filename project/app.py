@@ -8,22 +8,31 @@ app.config["SECRET_KEY"] = "secret_key"
 
 main = Blueprint("main", __name__)
 
+
 # Main page for login
 @main.route("/")
 def home():
   return render_template("login.html")
 
 # User login logic
-@main.route("/app", methods=["GET", "POST"])
+@main.route("/", methods=["GET", "POST"])
 def login():
+  # Stores user information 
   session["email"] = request.form["email"]
   session["password"] = request.form["password"]
 
   # If user information matches the information in the database, continue to application
   if checkLogin(session['email'], session['password']):
-    return render_template("app.html", email = session["email"], password = session["password"])
+    return redirect(url_for('main.dashboard'))
   else:
-    return render_template("login.html")
+    return render_template("login.html", loginFailure=True)
+
+# TODO: Finish the dashboard page
+# Dashboard page
+@main.route("/app")
+def dashboard():
+  return render_template("app.html", email=session["email"], password=session["password"])
+
 
 app.register_blueprint(main)
 
