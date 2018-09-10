@@ -1,4 +1,4 @@
-# Module for reading Python files
+# Python module checks if the pass user information matches with the database 
 
 # Import pandas
 import pandas as pd
@@ -48,9 +48,3 @@ dict_email_password = {}
 # Email as the key and password as the value
 for i in range(len(list_email)):
   dict_email_password[list_email[i]] = list_password[i]
-
-# Prints all of the email and password
-for i in dict_email_password:
-  print('Email:', i)
-  print('Password:', dict_email_password[i])
-
