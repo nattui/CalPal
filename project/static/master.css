@@ -47,14 +47,6 @@ table {
   border-spacing: 0;
 }
 
-.form-wrapper {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  border-color: orangered;
-  border-style: dotted;
-  border-width: 1px;
-}
-
 .main, .form-container .center {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -106,7 +98,7 @@ html, body {
 .form-container h1 {
   font-size: 32px;
   font-weight: 700;
-  margin: 10px 0px 10px 0px;
+  margin: 10% 0px 10px 0px;
 }
 
 .form-container h2 {
@@ -172,7 +164,7 @@ form input::placeholder {
 }
 
 form button[type="submit"] {
-  margin-bottom: 10px;
+  margin-bottom: 10%;
   background-color: #14aaf5;
   border-radius: 5px;
   border: none;
