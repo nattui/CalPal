@@ -1,39 +1,24 @@
 # Python file
 
 # Import pandas
-import pandas as pd
+# from reader import login, checkEmail, checkPassword
+import sys
+sys.path.append('/')
+import reader
 
-# Assign spreadsheet to file
-file = '../../database/database.xlsx'
-
-# Load spreadsheet
-xl = pd.ExcelFile(file)
-
-# Print the sheet names
-# print(xl.sheet_names)
-
-# Load a sheet into a DataFrame by name
-df = xl.parse('Sheet1')
-
-# print(type(df))
-
+# Developer Space
 print()
 print()
 print()
+print('Developer')
 
-print(df)
-print()
-
-print(df['First Name'][1])
-print()
-
-list_email = df['Email']
-
-# Prints all the elements in the column
-for i in df.index:
-  print(df['Email'][i])
+email = 'nraptor12345@gmail.com'
+password = 'Dog1'
+print(checkEmail('bob@gmail.com'))
+print(checkEmail('steve@gmail.com'))
+print("Email:", checkEmail(email))
+print("Password:", checkPassword(email, 'pe'))
+print("Password:", checkPassword(email, 'Dog1'))
 
 print()
-
-for i in list_email:
-  print('Email:', i)
+print("Login:", login(email, password))
