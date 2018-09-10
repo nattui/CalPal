@@ -85,7 +85,7 @@ html, body {
 }
 
 .form-container {
-  border-radius: 2px;
+  border-radius: 5px;
   -webkit-box-shadow: 0px 0px 50px 0px #e6e6e6;
           box-shadow: 0px 0px 50px 0px #e6e6e6;
   background-color: white;
@@ -181,11 +181,11 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-  background-color: #0a9ce6;
+  background-color: #098ccd;
 }
 
 form button[type="submit"]:focus {
-  background-color: #098ccd;
+  background-color: #087bb5;
   padding-top: 5px;
 }
 /*# sourceMappingURL=master.css.map */
