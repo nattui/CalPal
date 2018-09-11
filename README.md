@@ -5,7 +5,7 @@ Managing Calories for Health Conscious People
 
 ## Technologies and Tools
 **Design**
-* [Mockplus](https://www.mockplus.com/) // Prototype and Wireframe tool
+* [Moqups](https://moqups.com/) // Prototype and Wireframe tool
 * [draw.io](https://www.draw.io/) // Diagram tool
 
 **Front-end**
