@@ -1,3 +1,5 @@
+# TODO Reseach G package
+
 # This is where the python flask code occupies
 
 from flask import Flask, render_template, redirect, url_for, request, Blueprint, session
@@ -56,16 +58,18 @@ def signup_redirect():
 
   # If email is unique, create the user in the database
   if not checkEmail(session["email"]):
+    userCreation(session["fname"], session["lname"], session["email"], session["password"])
     return redirect(url_for('main.signup_success'))
   else:
     return render_template("signup.html", loginFailure=True)
+
 
 
 # TODO: Finish the dashboard page
 # User dashboard page
 @main.route("/app")
 def dashboard():
-  return render_template("app.html", email=session["email"], password=session["password"])
+  return render_template("app.html", fname=session['fname'], lname=session['lname'], email=session['email'], password=session['password'])
 
 
 app.register_blueprint(main)
