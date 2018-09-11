@@ -97,6 +97,10 @@ html, body {
     color: darken($accent-color, 10%);
   }
 
+  b {
+    font-weight: bolder;
+  }
+
   .success {
     @extend %flexbox;
     height: 40px;
