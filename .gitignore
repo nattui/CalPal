@@ -1,6 +1,9 @@
 # CalPal Files
 .DS_Store
 .vscode/
+
+# Database
+database/
 database/database.xlsx
 ~$database.xlsx
 
