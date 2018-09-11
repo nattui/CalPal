@@ -33,6 +33,7 @@ Open command line
 ```shell
 pip install flask
 pip install pandas
+pip install xlrd
 ```
 
 Then navigate to the project
