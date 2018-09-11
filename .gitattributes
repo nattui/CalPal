@@ -6,3 +6,4 @@
 .gitignore export-ignore
 README.md export-ignore
 screenshot.png export-ignore
+screenshot/ export-ignore
