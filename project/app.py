@@ -3,7 +3,7 @@
 # This is where the python flask code occupies
 
 from flask import Flask, render_template, redirect, url_for, request, Blueprint, session
-from modules.reader import checkLogin, checkEmail, refreshDatabase, getDatabase, userCreation
+from modules.reader import checkLogin, checkEmail, getDatabase, userCreation
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key"
@@ -18,9 +18,6 @@ def index():
 # User login page
 @main.route("/login")
 def login():
-  print()
-  print("I WAS HERE 3")
-  print()
   return render_template("login.html")
 
 # Handles the login page logic
@@ -42,6 +39,7 @@ def login_redirect():
 def signup():
   return render_template("signup.html")
 
+# BUG Keeps name of previous user who signed up
 # If the user is sucessfully created
 @main.route("/success")
 def signup_success():
