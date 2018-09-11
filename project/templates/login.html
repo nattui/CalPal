@@ -11,12 +11,19 @@
         <div class="center">
           <!-- TODO: Add form-header to master.scss -->
           <div class="form-header">
-            <h1><a href="{{ url_for("main.home") }}">CalPal</a></h1>
+            <h1><a href="{{ url_for("main.login") }}">CalPal</a></h1>
             <h2>Managing Calories for Health Conscious People</h2>
             <p>- Log in -</p>
           </div>
         </div>
-  
+        
+        <!-- User creation message appears -->
+        {% if userCreation is defined %}
+        <div class="success">
+          <p>Account creation successful!</p>
+        </div>
+        {% endif %}
+
         <!-- Error message appears -->
         {% if loginFailure is defined %}
         <div class="failure">
@@ -25,19 +32,19 @@
         {% endif %}
 
         <!-- Form method="POST" -->
-        <form method="POST" action="{{ url_for("main.login") }}">
+        <form method="POST" action="{{ url_for("main.login_redirect") }}">
 
           <!-- Email -->
           <div class=input-label>
             <label>Email Address</label>
-            <span>*</span>
+            <span>•</span>
           </div>
           <input type="email" name="email" placeholder="name@company.com" spellcheck="false" autofocus required>
 
           <!-- Password -->
           <div class=input-label>
             <label>Password</label>
-            <span>*</span>
+            <span>•</span>
           </div>
           <input type="password" name="password" placeholder="Password" spellcheck="false" required>
 
@@ -46,6 +53,7 @@
 
         </form>
 
+        <p>Don’t have an account? <a href="{{ url_for("main.signup") }}">Sign up</a></p>
   
       </div>
     </div>
