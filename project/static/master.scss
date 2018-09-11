@@ -4,7 +4,7 @@
 
 $background-color: #f8f8f8;
 $accent-color: #14aaf5;
-$form-margin: 10%;
+// $form-margin: 10%;
 
 // CSS Layout debugging
 %debug {
@@ -89,14 +89,27 @@ html, body {
     transition: 0.25s;
   }
 
+  p a {
+    color: $accent-color;
+  }
+
   a:hover {
     color: darken($accent-color, 10%);
+  }
+
+  .success {
+    @extend %flexbox;
+    height: 40px;
+    margin: 15px 0px 10px 0px;
+    border-radius: 2px;
+    color: #4bc04e;
+    background-color: #ecffec;
   }
 
   .failure {
     @extend %flexbox;
     height: 40px;
-    margin-top: 20px;
+    margin: 15px 0px 10px 0px;
     border-radius: 2px;
     background-color: #ffedef;
   }
@@ -108,7 +121,7 @@ form {
   @extend %fill-container;
   
     // Form input fields 
-  input[type="email"], input[type="password"], button[type="submit"] {
+  input[type="text"], input[type="email"], input[type="password"], button[type="submit"] {
     margin-bottom: 10px;
     padding-left: 4px;
     border: 1px solid rgb(240, 240, 240);
@@ -120,13 +133,13 @@ form {
     transition: 0.25s;
   }
 
-  input[type="email"]:hover, input[type="password"]:hover {
+  input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover {
     // border-left: 3px solid $accent-color;
     // border-color: $accent-color;
     padding-left: 10px;
   }
 
-  input[type="email"]:focus, input[type="password"]:focus {
+  input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
     border-color: darken($accent-color, 10%);
   }
 
@@ -138,7 +151,7 @@ form {
 
   // Buttom with submit type
   button[type="submit"] {
-    margin-top: 20px;
+    margin: 20px 0px 40px 0px;
     background-color: $accent-color;
     border-radius: 3px;
     border: none;
