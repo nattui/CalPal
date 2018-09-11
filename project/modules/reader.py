@@ -40,6 +40,7 @@ def userCreation(fname, lname, email, password):
     list_lname.append(lname)
     list_email.append(email)
     list_password.append(password)
+    dict_email_password[email] = password
 
     # Create a Pandas dataframe from the data.
     df = pd.DataFrame({'First Name': list_fname, 'Last Name': list_lname,
