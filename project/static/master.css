@@ -129,6 +129,10 @@ html, body {
   color: #098ccd;
 }
 
+.form-container b {
+  font-weight: bolder;
+}
+
 .form-container .success {
   height: 40px;
   margin: 15px 0px 10px 0px;
