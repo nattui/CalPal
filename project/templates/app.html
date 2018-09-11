@@ -10,12 +10,21 @@
 
       <div class="center">
         <div>
-          <h1><a href="{{ url_for('main.home') }}">CalPal</a></h1>
+          <h1><a href="{{ url_for('main.login') }}">CalPal</a></h1>
           <h2>Managing Calories for Health Conscious People</h2>
-          <p>User Information</p>
         </div>
       </div>
 
+      <div class="success">
+        <p>Login successful!</p>
+      </div>
+
+      <br>
+      <p><b>User Information</b></p>
+
+      <br>
+      <p>Hi, {{ fname }} {{ lname }}!</p>
+      <br>
       <!-- Shows user information -->
       <p><b>Email: </b>{{ email }}</p>
       <p><b>Password:</b> {{ "*" * password|length }}</p>
