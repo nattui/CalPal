@@ -4,8 +4,7 @@
 
 # Database
 database/
-database/database.xlsx
-~$database.xlsx
+*.xlsx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
