@@ -33,7 +33,6 @@ def login_redirect():
   else:
     return render_template("login.html", loginFailure=True)
 
-
 # User signin page
 @main.route("/signup")
 def signup():
