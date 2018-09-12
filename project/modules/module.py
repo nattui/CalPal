@@ -102,20 +102,20 @@ for i in range(len(list_email)):
 
 if __name__ == '__main__':
   print()
+  print()
 
-  # print("BEFORE:", list_email)
+  fname = 'Jasmine'
+  lname = 'Mai'
+  email = 'jasmine@gmail.com'
+  password = 'Cat2'
 
-  # fname = 'Jasmine'
-  # lname = 'Mai'
-  email = 'king@gmail.com'
-  password = 'king'
+  for i in range(10000):
+    fname = str(i)
+    lname = str(i)
+    email = str(i) + '@gmail.com'
+    password = str(i)
+    userCreation(fname, lname, email, password)
 
-  # print("USER CREATED:", userCreation(fname, lname, email, password))
-  # print("AFTER:", list_email)
-  
-  # print("DONE")
+  print("AFTER:", list_email)
 
-  print("BEFORE:", dict_email_password)
-  dict_email_password[email] = password
-  print("AFTER:", dict_email_password)
-
+  print("DONE")
