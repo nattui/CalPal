@@ -25,7 +25,6 @@ Managing Calories for Health Conscious People
   * [GitHub](https://github.com/) // Version Control
   * [GitHub Desktop](https://desktop.github.com/) // Git GUI
 * [Visual Studio Code](https://code.visualstudio.com/) // Code Editor 
-  * [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) // Local Server with live reload
   * [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) // Compile Sass or Scss to CSS 
 
 ## Getting Started
