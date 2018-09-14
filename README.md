@@ -17,8 +17,9 @@ Managing Calories for Health Conscious People
 **Back-end**
 * [Python](https://www.python.org/)
 * [Flask](http://flask.pocoo.org/) // Micro Web Framework 
+  * [Jinja2](http://jinja.pocoo.org/) // Template Engine 
 * [Pandas](https://pandas.pydata.org/) // Data manipulation 
-* [Jinja2](http://jinja.pocoo.org/) // Template Engine 
+
 
 **Et Cetera**
 * [Git](https://git-scm.com/)
