@@ -68,10 +68,7 @@ def checkLogin(email, password):
         # Checks if email and password matches the database 
         if ((df.loc[df['Email'] == email].index[0]) == (df.loc[df['Password'] == password].index[0])):
             return True;
-        else:
-            return False;
-    else:
-        return False;
+    return False;
     
 
 print('Login Validation:', checkLogin('tim@apple.com', 'apple'))
