@@ -26,7 +26,7 @@ Managing Calories for Health Conscious People
   * [GitHub](https://github.com/) // Version Control
   * [GitHub Desktop](https://desktop.github.com/) // Git GUI
 * [Visual Studio Code](https://code.visualstudio.com/) // Code Editor 
-  * [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) // Compile Sass or Scss to CSS 
+* [Gulp](https://gulpjs.com/) // Task Runner 
 
 ## Getting Started (Windows)
 Open command line
