@@ -56,8 +56,8 @@ def checkLogin(email, password):
     Validates the user email and password.
 
     Args:
-        email (str): The email from the submitted form
-        password (str): The password from the submitted form
+        email (str): The email from the submitted form.
+        password (str): The password from the submitted form.
 
     Returns:
         bool: True when the email and password matches the database, False otherwise.
@@ -69,8 +69,31 @@ def checkLogin(email, password):
         if ((df.loc[df['Email'] == email].index[0]) == (df.loc[df['Password'] == password].index[0])):
             return True;
     return False;
+
+def userInformation(email):
+    '''
+    Gets the user information in a dictionary.
+
+    Args:
+        email (str): The email from the submitted form.
+
+    Returns:
+        dict: User information such as First and Last Name and email.
+    '''
+    
+    userInformation = {}
+    userInformation['First Name'] = df['First Name'][df.loc[df['Email'] == email].index[0]]
+    userInformation['Last Name'] = df['Last Name'][df.loc[df['Email'] == email].index[0]]
+    userInformation['Email'] = email
+    return userInformation
     
 
 print('Login Validation:', checkLogin('tim@apple.com', 'apple'))
 print('Login Validation:', checkLogin('tim@apple.comm', 'apple'))
 print('Login Validation:', checkLogin('tim@apple.com', '123'))
+
+userInformation('tim@apple.com')
+
+pizza = {}
+pizza['apple'] = 'apple1'
+print(type(pizza))
