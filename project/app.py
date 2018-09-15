@@ -33,16 +33,15 @@ def login_redirect():
     else:
         return render_template("login.html", loginFailure=True)
 
+# If the user is sucessfully created
+@main.route("/login/success")
+def signup_success():
+    return render_template("login.html", userCreation=True)
+
 # User signin page
 @main.route("/signup")
 def signup():
     return render_template("signup.html")
-
-# BUG Keeps name of previous user who signed up
-# If the user is sucessfully created
-@main.route("/success")
-def signup_success():
-    return render_template("login.html", userCreation=True)
 
 # Handles the sign up page logic
 @main.route("/signup", methods=["GET", "POST"])
