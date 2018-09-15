@@ -65,8 +65,14 @@ def signup_redirect():
 # User dashboard page
 @main.route("/app")
 def dashboard():
-    # return render_template("app.html", fname=session['fname'], lname=session['lname'], email=session['email'], password=session['password'])
-    return render_template("app.html", email=session['email'], password=session['password'])
+    try:
+        email = session['email']
+        password = session['password']
+        session.clear()
+        return render_template("app.html", email=email, password=password)
+    except:
+        return redirect(url_for('main.login'))
+
 
 
 app.register_blueprint(main)
