@@ -20,19 +20,25 @@ def checkEmail(email):
     else:
        return(False)
 
-# Checks if the email match the password
-def checkPassword(email, password):
-    if password == dict_email_password[email]:
-        return(True)
-    else:
-        return(False)
-
-# Checks form information with the database
 def checkLogin(email, password):
-    if checkEmail(email):
-        return(checkPassword(email, password))
-    else:
-        return(False)
+    '''
+    Validates the user email and password.
+
+    Args:
+        email (str): The email from the submitted form.
+        password (str): The password from the submitted form.
+
+    Returns:
+        bool: True when the email and password matches the database, False otherwise.
+    '''
+
+    # Checks if email is in email database
+    if (email in df['Email'].values):
+        # Checks if email and password matches the database
+        index = df.loc[df['Email'] == email].index[0]
+        if ((df['Email'][index] == email) and (df['Password'][index] == password)):
+            return True
+    return False
 
 # Create users: If email is unique, add user to the database
 def userCreation(fname, lname, email, password):
