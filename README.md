@@ -28,7 +28,7 @@ Managing Calories for Health Conscious People
 * [Visual Studio Code](https://code.visualstudio.com/) // Code Editor 
   * [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) // Compile Sass or Scss to CSS 
 
-## Getting Started
+## Getting Started (Windows)
 Open command line
 ```shell
 pip install flask
@@ -51,4 +51,4 @@ python app.py
 All parts of CalPal are free to use and abuse under the open-source MIT license.
 
 ## Acknowledgement
-CalPal was created by [Nhat Nguyen](https://github.com/nguyen-nhat), [Jackson Truong](https://github.com/), and [Albert Ong](https://github.com/).
+CalPal was created by [Nhat Nguyen](https://github.com/nguyen-nhat), [Jackson Truong](https://github.com/), and [Albert Ong](https://github.com/Anferensis).
