@@ -67,8 +67,8 @@ def checkLogin(email, password):
     if (email in df['Email'].values):
         # Checks if email and password matches the database 
         if ((df.loc[df['Email'] == email].index[0]) == (df.loc[df['Password'] == password].index[0])):
-            return True;
-    return False;
+            return True
+    return False
 
 def userInformation(email):
     '''
@@ -78,7 +78,7 @@ def userInformation(email):
         email (str): The email from the submitted form.
 
     Returns:
-        dict: User information such as First and Last Name and email.
+        userInformation (dict): User information such as first and last name and email.
     '''
     
     userInformation = {}
