@@ -78,7 +78,7 @@ def userInformation(email):
         email (str): The email from the submitted form.
 
     Returns:
-        userInformation (dict): User information such as first and last name and email.
+        userInformation (dict): User information such as first name, last name, and email.
     '''
     
     userInformation = {}
