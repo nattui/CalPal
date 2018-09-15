@@ -223,4 +223,18 @@ form span {
   float: right;
   color: #FF5555;
 }
+
+form .name {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .name-size {
+  width: 46%;
+}
 /*# sourceMappingURL=master.css.map */
