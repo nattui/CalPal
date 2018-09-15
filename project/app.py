@@ -26,7 +26,7 @@ def login_redirect():
     # Stores login user information 
     session["email"] = request.form["email"]
     session["password"] = request.form["password"]
-
+    print(session["email"], session["password"])
     # If user information matches the information in the database, continue to application
     if checkLogin(session['email'], session['password']):
         return redirect(url_for('main.dashboard'))
