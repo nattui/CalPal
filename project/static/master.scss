@@ -188,4 +188,15 @@ form {
     color: #FF5555;
   }
 
+  // Name input fields
+  .name {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .name-size {
+    width: 46%;
+  }
+
 }
