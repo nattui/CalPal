@@ -56,13 +56,16 @@ def checkLogin(email, password):
     Validates the user email and password.
 
     Args:
-        email (str): 
-        password(str): 
+        email (str): The email from the submitted form
+        password (str): The password from the submitted form
+
+    Returns:
+        bool: True when the email and password matches the database, False otherwise.
     '''
 
     # Checks if email is in email database
     if (email in df['Email'].values):
-        # Checks if email and password inputted matches the database 
+        # Checks if email and password matches the database 
         if ((df.loc[df['Email'] == email].index[0]) == (df.loc[df['Password'] == password].index[0])):
             return True;
         else:
