@@ -26,19 +26,26 @@
       <!-- Form method="POST" -->
       <form method="POST" action="{{ url_for("main.signup_redirect") }}">
 
+        <!-- Name Inputs: First and Last Name -->
+        <div class="name">
         <!-- First Name -->
-        <div class="input-label">
-          <label>First Name</label>
-          <span>•</span>
-        </div>
-        <input class="" type="text" name="fname" placeholder="First Name" spellcheck="false" autofocus required>
+          <div class="name-size">
+            <div class="input-label">
+              <label>First Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="fname" placeholder="First Name" spellcheck="false" autofocus required>
+          </div>
 
         <!-- Last Name -->
-        <div class="input-label">
-          <label>Last Name</label>
-          <span>•</span>
+          <div class="name-size">
+            <div class="input-label">
+              <label>Last Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="lname" placeholder="Last Name" spellcheck="false" required>
+          </div>
         </div>
-        <input type="text" name="lname" placeholder="Last Name" spellcheck="false" required>
 
         <!-- Email -->
         <div class="input-label">
