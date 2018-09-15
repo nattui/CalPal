@@ -61,22 +61,6 @@ def userCreation(fname, lname, email, password):
     return True
 
 
-def refreshDatabase():
-  # Create a Pandas dataframe from the excel file
-  df = pd.read_excel('../../database/database.xlsx', sheet_name='Sheet1')
-
-  # Save columns as list
-  list_fname = convert(df['First Name'])
-  list_lname = convert(df['Last Name'])
-  list_email = convert(df['Email'])
-  list_password = convert(df['Password'])
-
-  # Create a dictionary (KEY email: VALUE password) for user information
-  dict_email_password = {}
-  for i in range(len(list_email)):
-    dict_email_password[list_email[i]] = list_password[i]
-
-
 def getDatabase():
   list = []
   list.append(list_fname)
@@ -109,13 +93,31 @@ if __name__ == '__main__':
   email = 'jasmine@gmail.com'
   password = 'Cat2'
 
-  for i in range(10000):
+  for i in range(10001,1000001):
     fname = str(i)
     lname = str(i)
     email = str(i) + '@gmail.com'
     password = str(i)
-    userCreation(fname, lname, email, password)
+    print(i)
+    list_fname.append(fname)
+    list_lname.append(lname)
+    list_email.append(email)
+    list_password.append(password)
+    # userCreation(fname, lname, email, password)
 
-  print("AFTER:", list_email)
+  # Create a Pandas dataframe from the data.
+  df = pd.DataFrame({'First Name': list_fname, 'Last Name': list_lname,
+                      'Email': list_email, 'Password': list_password})
+
+  # Create a Pandas Excel writer using XlsxWriter as the engine.
+  writer = pd.ExcelWriter(
+      '../../database/database.xlsx', engine='xlsxwriter')
+
+  # Convert the dataframe to an XlsxWriter Excel object.
+  df.to_excel(writer, sheet_name='Sheet1')
+
+  # Close the Pandas Excel writer and output the Excel file.
+  writer.save()
+  # print("AFTER:", list_email)
 
   print("DONE")
