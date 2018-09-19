@@ -3,12 +3,14 @@ var rename = require("gulp-rename");
 var sass = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
 
+// Process Sass preporocesser to CSS
 gulp.task('sass', function () {
     return gulp.src('../Sass/master.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('../Sass'));
 });
 
+// Minify CSS to reduce file size
 gulp.task('css', function () {
     return gulp.src('../Sass/master.css')
         .pipe(cssnano())
