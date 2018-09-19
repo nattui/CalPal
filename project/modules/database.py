@@ -98,3 +98,41 @@ userInformation('tim@apple.com')
 pizza = {}
 pizza['apple'] = 'apple1'
 print(type(pizza))
+
+
+ AREA myData, DATA, READWRITE
+
+x	 DCD	B0000000
+y    DCD	20000000
+z	 DCD	0
+
+AREA myCode, CODE, READONLY
+EXPORT __main
+ALIGN
+ENTRY
+__main PROC
+
+Create X
+LDR r4, = x
+LDR r0, [r4]
+,  # 1
+
+Create Y
+LDR r4, = y
+LDR r1, [r4]
+,  # 1
+
+SUB r3, r0, r1
+
+LDR r4, = z
+STR r3, [r4]
+
+
+STOP B STOP
+ENDP
+END
+
+
+
+
+
