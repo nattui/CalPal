@@ -1,3 +1,14 @@
+
+/*
+ * CalPal: A calorie tracking app.
+ * Written by Nhat Nguyen and Albert Ong.
+ * CMPE 131
+ * Revision: 23.10.2018
+ * 
+ * master.css
+ * The master stylesheet. Used in base.html 
+*/
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -11,11 +22,11 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
   margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
@@ -25,6 +36,9 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
+  color: #FFEF9F;
+  background-image: linear-gradient(to right, #B02635, #F97C21);
+  background-repeat: no-repeat;
   line-height: 1;
 }
 
@@ -122,11 +136,11 @@ html, body {
 }
 
 .form-container p a {
-  color: #14aaf5;
+  color: #FF882B;
 }
 
 .form-container a:hover {
-  color: #098ccd;
+  color: #f76c00;
 }
 
 .form-container b {
@@ -167,7 +181,7 @@ form input[type="text"]:hover, form input[type="email"]:hover, form input[type="
 }
 
 form input[type="text"]:focus, form input[type="email"]:focus, form input[type="password"]:focus {
-  border-color: #098ccd;
+  border-color: #f76c00;
 }
 
 form input::-webkit-input-placeholder {
@@ -192,7 +206,7 @@ form input::placeholder {
 
 form button[type="submit"] {
   margin: 20px 0px 40px 0px;
-  background-color: #14aaf5;
+  background-color: #FF882B;
   border-radius: 3px;
   border: none;
   color: white;
@@ -201,11 +215,11 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-  background-color: #098ccd;
+  background-color: #f76c00;
 }
 
 form button[type="submit"]:focus {
-  background-color: #087bb5;
+  background-color: #de6100;
   padding-top: 5px;
 }
 
@@ -222,5 +236,19 @@ form label {
 form span {
   float: right;
   color: #FF5555;
+}
+
+form .name {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .name-size {
+  width: 46%;
 }
 /*# sourceMappingURL=master.css.map */
