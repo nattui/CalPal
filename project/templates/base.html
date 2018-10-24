@@ -1,3 +1,14 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 23.10.2018
+
+base.html
+The base HTML file which all other HTML files extend from.
+-->
+
 <!-- HTML file -->
 <!DOCTYPE html>
 <html lang="en">
@@ -6,19 +17,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>CalPal - Managing Calories for Health Conscious People</title>
+    
     <link rel="stylesheet" href="../static/master.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
     <link rel="icon" href="../static/favicon.png">
+    
     <script src="../static/master.js"></script>
   </head>
 
   <body>
-
     <!-- Inheritance -->
     {% block content %}
     {% endblock %}
-
   </body>
 
 </html>

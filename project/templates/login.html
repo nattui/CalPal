@@ -1,3 +1,11 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 23.10.2018
+-->
+
 <!-- Shows login form -->
 {% extends "base.html" %}
 {% block content %}
@@ -9,7 +17,6 @@
       <div class="form-wrapper">
   
         <div class="center">
-          <!-- TODO: Add form-header to master.scss -->
           <div class="form-header">
             <h1><a href="{{ url_for("main.login") }}">CalPal</a></h1>
             <h2>Managing Calories for Health Conscious People</h2>
@@ -53,7 +60,7 @@
 
         </form>
 
-        <p>Don’t have an account? <a href="{{ url_for("main.signup") }}">Sign up</a></p>
+        <p>Don’t have an account? <a href="{{ url_for('main.signup') }}">Sign up</a></p>
   
       </div>
     </div>
