@@ -3,10 +3,11 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 23.10.2018
+Revision: 27.10.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
+TODO: Finish the dashboard page
 """
 
 from flask import (Flask, 
@@ -45,7 +46,6 @@ def login_redirect():
     # Stores login user information 
     session["email"] = request.form["email"]
     session["password"] = request.form["password"]
-    print(session["email"], session["password"])
     
     # If user information matches the information in the database, continue to application
     if checkLogin(session['email'], session['password']):
@@ -84,17 +84,19 @@ def signup_redirect():
         return render_template("signup.html", loginFailure=True)
 
 
-# TODO: Finish the dashboard page
 # User dashboard page
 @main.route("/app")
 def dashboard():
-    try:
-        email = session['email']
-        password = session['password']
-        session.clear()
-        return render_template("app.html", email=email, password=password)
-    except:
-        return redirect(url_for('main.login'))
+  try:
+    fname = session["fname"]
+    lname = session["lname"]
+    
+    # What does this line do?
+    session.clear()
+    
+    return render_template("app.html", fname=fname, lname=lname)
+  except:
+      return redirect(url_for('main.login'))
 
 app.register_blueprint(main)
 
