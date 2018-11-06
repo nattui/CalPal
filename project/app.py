@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 27.10.2018
+Revision: 05.11.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
@@ -19,6 +19,7 @@ from flask import (Flask,
 from modules.reader import (checkLogin, 
                             checkEmail, 
                             getDatabase, 
+                            returnFirstLastName,
                             userCreation)
 
 app = Flask(__name__)
@@ -47,8 +48,16 @@ def login_redirect():
     session["email"] = request.form["email"]
     session["password"] = request.form["password"]
     
+    # Retrieves an array with two string values:
+    #   ("first_name", "last_name")
+    names = returnFirstLastName(session["email"])
+    
+    # Assigns the first and last names as attributes to session. 
+    session["fname"] = names[0]
+    session["lname"] = names[1]
+    
     # If user information matches the information in the database, continue to application
-    if checkLogin(session['email'], session['password']):
+    if checkLogin(session["email"], session["password"]):
         return redirect(url_for('main.dashboard'))
     else:
         return render_template("login.html", loginFailure=True)
@@ -75,7 +84,7 @@ def signup_redirect():
     session["lname"] = request.form["lname"]
     session["email"] = request.form["email"]
     session["password"] = request.form["password"]
-
+    
     # If email is unique, create the user in the database
     if not checkEmail(session["email"]):
         userCreation(session["fname"], session["lname"], session["email"], session["password"])
@@ -87,16 +96,27 @@ def signup_redirect():
 # User dashboard page
 @main.route("/app")
 def dashboard():
+  
   try:
+    
+    # Attempts to retrieve the first name, last name, email, and 
+    # password of the user. 
     fname = session["fname"]
     lname = session["lname"]
+    email = session['email']
+    password = session['password']
     
-    # What does this line do?
+    # What does this line do? -Albert
     session.clear()
     
-    return render_template("app.html", fname=fname, lname=lname)
+    return render_template("app.html", 
+                           email = email, 
+                           password = password, 
+                           fname = fname,
+                           lname = lname)
   except:
       return redirect(url_for('main.login'))
+
 
 app.register_blueprint(main)
 
