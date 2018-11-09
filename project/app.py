@@ -3,11 +3,15 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 05.11.2018
+Revision: 08.11.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
 TODO: Finish the dashboard page
+
+Note for later: For an unknown reason, the program returns an 
+IndexingError when trying to login after the user has created an account. 
+Still don't know why that is...
 """
 
 from flask import (Flask, 
@@ -19,8 +23,8 @@ from flask import (Flask,
 from modules.reader import (checkLogin, 
                             checkEmail, 
                             getDatabase, 
-                            returnFirstLastName,
-                            userCreation)
+                            getUserData,
+                            createUser)
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key"
@@ -50,11 +54,11 @@ def login_redirect():
     
     # Retrieves an array with two string values:
     #   ("first_name", "last_name")
-    names = returnFirstLastName(session["email"])
+    user_data = getUserData(session["email"])
     
     # Assigns the first and last names as attributes to session. 
-    session["fname"] = names[0]
-    session["lname"] = names[1]
+    session["fname"] = user_data[0]
+    session["lname"] = user_data[1]
     
     # If user information matches the information in the database, continue to application
     if checkLogin(session["email"], session["password"]):
@@ -79,16 +83,81 @@ def signup():
 @main.route("/signup", methods=["GET", "POST"])
 def signup_redirect():
 
-    # Stores signup user information
-    session["fname"] = request.form["fname"]
-    session["lname"] = request.form["lname"]
-    session["email"] = request.form["email"]
-    session["password"] = request.form["password"]
+    # Retrieves the user's height in feet and inches and converts 
+    # them to integers.  
+    height_feet   = int(request.form["height-feet"])
+    height_inches = int(request.form["height-inches"])
     
-    # If email is unique, create the user in the database
+    # Sums the total height in inches and converts it into a string. 
+    total_height = str((height_feet * 12) + height_inches)
+    
+    # Uses a for loop to iterate through ever piece of user information.
+    for var_name in ("fname", 
+                     "lname", 
+                     "email", 
+                     "password", 
+                     "gender", 
+                     "birth-day", 
+                     "birth-month", 
+                     "birth-year", 
+                     "height"):
+      
+      # For the case of birth month...
+      if var_name == "birth-month":
+      
+        # Retrieves the name of the user's birth month. 
+        month_name = request.form[var_name]
+        
+        # A dictionary that converts a month name to its
+        # corresponding number. 
+        month_name_to_number = \
+          {"January"   : "1",
+           "February"  : "2", 
+           "March"     : "3",
+           "April"     : "4", 
+           "May"       : "5",
+           "June"      : "6", 
+           "July"      : "7",
+           "August"    : "8", 
+           "September" : "9",
+           "October"   : "10", 
+           "November"  : "11",  
+           "December"  : "12", }
+          
+        # Converts the the user's birth month to its
+        # corresponing number. 
+        month_num = month_name_to_number[month_name]
+        
+        # Assigns the month number as an attribute. 
+        session[var_name] = month_num
+      
+      # The assigned variable for height is different than other 
+      # attributes because the total height was calculated previously
+      # in total inches.  
+      elif var_name == "height":
+         session[var_name] = total_height
+      
+      # Creates an attribute using the name of the variable   
+      else:
+        session[var_name] = request.form[var_name]
+        
+    
+    # If email is unique, create the user in the database.
     if not checkEmail(session["email"]):
-        userCreation(session["fname"], session["lname"], session["email"], session["password"])
+        
+        # Stores the new user's data.  
+        createUser(session["fname"], 
+                   session["lname"], 
+                   session["email"],
+                   session["password"], 
+                   session["gender"], 
+                   session["birth-day"], 
+                   session["birth-month"], 
+                   session["birth-year"], 
+                   session["height"])
+        
         return redirect(url_for('main.signup_success'))
+        
     else:
         return render_template("signup.html", loginFailure=True)
 
@@ -122,7 +191,6 @@ app.register_blueprint(main)
 
 
 #=======================================================================
-
 
 if __name__ == "__main__":
     app.run(debug=True)
