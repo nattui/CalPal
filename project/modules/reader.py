@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 05.11.2018
+Revision: 08.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -16,20 +16,24 @@ TODO: Optimize the reading and writing database
 import pandas as pd
 import timeit
 
-# Convert DataFrame column to list
+
 def convert(df_column):
-  list = []
+  """
+  Converts a DataFrame column to list
+  """
+  data_list = []
+  
   for element in df_column:
-      list.append(element)
-  return list
+      data_list.append(element)
+      
+  return data_list
 
 
-# Checks if the email exist in the database
 def checkEmail(email):
-  if email in list_email:
-    return(True)
-  else:
-     return(False)
+  """
+  Checks if a given email is currently in the database. 
+  """
+  return email in list_email
 
 
 def checkLogin(email, password):
@@ -56,54 +60,97 @@ def checkLogin(email, password):
   return False
 
 
-def returnFirstLastName(email):
+def getUserData(email):
   """
-  A function that returns the first and last name of a user givern
-  the user's email. This is specifically used in 
-  login_redirect. 
+  A function that returns a user's data given the user's email. 
+  This is specifically used in login_redirect. 
   
-  Returns an array of two strings:
-    ("first_name", "last_name")
+  Returns a list of strings:
+    [first_name, last_name, gender, height]
   """
   
-  # Retreives all the first and last names. 
-  first_name_data = df["First Name"]
-  last_name_data = df["Last Name"]
+  # Retrieves the datafile. 
+  datafile = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
+  
+  # Retreives all relevant columns user data. 
+  first_name_data   = datafile["First Name"]
+  last_name_data    = datafile["Last Name"]
+  gender_data       = datafile["Gender"]
+  birth_day_data    = datafile["Birth-day"]
+  birth_month_data  = datafile["Birth-month"]
+  birth_year_data   = datafile["Birth-year"]
+  height_data       = datafile["Height"]
   
   # Retrieves the index associated with the user's email. 
-  index = df.loc[df['Email'] == email].index[0]
+  index = datafile.loc[df["Email"] == email].index[0]
   
-  # Retrieves the first and last name using the index. 
-  first_name = first_name_data[index]
-  last_name = last_name_data[index]
+  # Generates a list of all relevant user data using the data columns
+  # and the user's index. 
+  user_data = []
   
-  # Returns the first and last names. 
-  return (first_name, last_name)
+  for data_list in (first_name_data, 
+                    last_name_data, 
+                    gender_data, 
+                    birth_day_data, 
+                    birth_month_data, 
+                    birth_year_data, 
+                    height_data):
+                    
+    user_data.append(data_list[index])
+  
+  # Returns the user's data.
+  return user_data
 
 
-# Create users: If email is unique, add user to the database
-def userCreation(fname, lname, email, password):
-  if checkEmail(email):
-      return False
-  else:
-    list_fname.append(fname)
-    list_lname.append(lname)
-    list_email.append(email)
-    list_password.append(password)
+def createUser(fname, 
+               lname, 
+               email, 
+               password, 
+               gender, 
+               birth_day, 
+               birth_month, 
+               birth_year, 
+               height):
+  """
+  Create users: If email is unique, add user to the database
+  """
+  
+  # Checks if the email is in the database. 
+  isEmailInDatabase = email in list_email
+  
+  # Only creates a new user if the email is not currently 
+  # in the database. 
+  if not isEmailInDatabase:
+    
+    # Uses a for loop to add each data field to 
+    # their respective columns. 
+    for data_list, new_data in ((list_fname,        fname), 
+                                (list_lname,        lname), 
+                                (list_email,        email), 
+                                (list_password,     password), 
+                                (list_gender,       gender), 
+                                (list_birth_day,    birth_day), 
+                                (list_birth_month,  birth_month), 
+                                (list_birth_year,   birth_year), 
+                                (list_height,       height), ):
+      data_list.append(new_data)
+    
+    # Adds the email and password to a dictionary. 
     dict_email_password[email] = password
 
-    # Create a Pandas dataframe from the data.
-    df = pd.DataFrame({'First Name': list_fname, 'Last Name': list_lname, 'Email': list_email, 'Password': list_password})
-    
-    # Changes the path of the database depending on whether or not the
-    # function is run on reader.py or app.py. 
-    if __name__ == "__main__":
-      database_path = "../../database/database.xlsx"
-    else:
-      database_path = "../database/database.xlsx"
+    # Creates a Pandas dataframe from the data.
+    df = pd.DataFrame({"First Name"   : list_fname, 
+                       "Last Name"    : list_lname, 
+                       "Email"        : list_email, 
+                       "Password"     : list_password, 
+                       "Gender"       : list_gender, 
+                       "Birth-day"    : list_birth_day, 
+                       "Birth-month"  : list_birth_month, 
+                       "Birth-year"   : list_birth_year, 
+                       "Height"       : list_height})
     
     # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter(database_path, engine="xlsxwriter")
+    writer = pd.ExcelWriter(getDatabasePath(), engine="xlsxwriter")
 
     # Convert the dataframe to an XlsxWriter Excel object.
     df.to_excel(writer, sheet_name='Sheet1')
@@ -111,58 +158,97 @@ def userCreation(fname, lname, email, password):
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
 
-    return True
-
 
 def getDatabase():
-  list = []
-  list.append(list_fname)
-  list.append(list_lname)
-  list.append(list_email)
-  list.append(list_password)
-  return(list)
+  """
+  Returns the entire user database, including all user names, emails
+  passwords, and other information. 
+  """
+  
+  # A list that will store all the values in the database.
+  # This will be the final output. 
+  database = []
+  
+  # Uses a for loop to iterate each column of the database. 
+  for column_name in ("First Name", 
+                      "Last Name", 
+                      "Email", 
+                      "Password", 
+                      "Gender", 
+                      "Birth-day", 
+                      "Birth-month", 
+                      "Birth-year", 
+                      "Height", ):
+    
+    # Retrieves the database column. 
+    database_column = convert(df[column_name])
+    
+    # Appends the solumn to the final output. 
+    database.append(database_column)
+  
+  # Returns the final output. 
+  return database
 
-start = timeit.default_timer()
 
-# Changes path of the database depending on whether or not the
-# function is run on reader.py or app.py. 
-if __name__ == "__main__":
-  database_path = "../../database/database.xlsx"
-else:
-  database_path = "../database/database.xlsx"
+def getDatabasePath():
+  """
+  Returns the path of the database depending on whether or not this
+  file is being run on reader.py or app.py. 
+  """
+  
+  if __name__ == "__main__":
+    database_path = "../../database/database.xlsx"
+  else:
+    database_path = "../database/database.xlsx"
+    
+  return database_path
+  
+
+
+#=======================================================================
+
 
 # Create a Pandas dataframe from the excel file
-df = pd.read_excel(database_path, sheet_name="Sheet1")
+df = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
 
 # Save columns as list
-list_fname = convert(df['First Name'])
-list_lname = convert(df['Last Name'])
-list_email = convert(df['Email'])
-list_password = convert(df['Password'])
-
-stop = timeit.default_timer()
-print()
-print('Time: ', stop - start)
-print()
+list_fname       = convert(df["First Name"])
+list_lname       = convert(df["Last Name"])
+list_email       = convert(df["Email"])
+list_password    = convert(df["Password"])
+list_gender      = convert(df["Gender"])
+list_birth_day   = convert(df["Birth-day"])
+list_birth_month = convert(df["Birth-month"])
+list_birth_year  = convert(df["Birth-year"])
+list_height      = convert(df["Height"])
 
 # Create a dictionary (KEY email: VALUE password) for user information
 dict_email_password = {}
 for i in range(len(list_email)):
     dict_email_password[list_email[i]] = list_password[i]
-# print("EMAL PASSWORD")
 
-if __name__ == '__main__':
-    # ~ print()
-    # ~ print("BEFORE:", list_email)
 
-    fname = 'Jasmine'
-    lname = 'Mai'
-    email = 'jasmine@gmail.com'
-    password = 'Cat2'
+if __name__ == "__main__":
+
+    fname = "John"
+    lname = "Doe"
+    email = "john.doe@gmail.com"
+    password = "testing"
+    gender = "Female"
+    birth_day = 1
+    birth_month = 12
+    birth_year = 1998
+    height = 70
+
+    print(getUserData("stan.smith@gmail.com"))
     
-    print(returnFirstLastName(email))
+    # ~ createUser(fname, 
+               # ~ lname, 
+               # ~ email, 
+               # ~ password, 
+               # ~ gender, 
+               # ~ birth_day, 
+               # ~ birth_month, 
+               # ~ birth_year, 
+               # ~ height)
     
-    # ~ print("USER CREATED:", userCreation(fname, lname, email, password))
-    # ~ print("AFTER:", list_email)
-
-    # ~ print("DONE")
