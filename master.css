@@ -1,0 +1,291 @@
+
+/*
+ * CalPal: A calorie tracking app.
+ * Written by Nhat Nguyen and Albert Ong.
+ * CMPE 131
+ * Revision: 15.11.2018
+ * 
+ * master.css
+ * The master stylesheet. Used in base.html 
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  border: 0;
+  color: #FFEF9F;
+  font: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  color: #FFEF9F;
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  background-image: linear-gradient(to right, #B02635, #F97C21);
+  background-attachment: fixed;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.main, .form-container .center, .form-container .success, .form-container .failure {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+html, body, form {
+  height: 100%;
+  width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 1.5% 0% 1.5% 0%;
+}
+
+.main {
+  min-height: inherit;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: inherit;
+}
+
+.form-wrapper {
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
+}
+
+.form-container {
+  border-radius: 5px;
+  background-color: #fba56730;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+
+  padding: 2.5% 0% 2.5% 0%;
+  text-align: center;
+  width: 580px;
+}
+
+.form-container h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0px 0px 10px 0px;
+}
+
+.form-container h2 {
+  font-style: italic;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.form-container .form-header p {
+  color: #FFEF9F;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.form-container a {
+  text-decoration: none;
+  color: black;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.form-container p a {
+  border-radius: 3px;
+  color: #FFEF9F;
+  font-weight: Bold;
+}
+
+.form-container a:hover {
+  color: #F97C21;
+}
+
+.form-container b {
+  font-weight: bolder;
+}
+
+/* Styles the success message in the form container. */
+.form-container .success {
+  background-color: #FF882B;
+  border-radius: 2px;
+  color: white;
+  height: 40px;
+  margin: 15px 0px 10px 0px;
+}
+
+/* Styles the failure message in the form container. */
+.form-container .failure {
+  border-radius: 2px;
+  background-color: #FF882B;
+  color: white;
+  height: 40px;
+  margin: 15px 0px 10px 0px;
+}
+
+form button[type="submit"], 
+form input[type="email"], 
+form input[type="number"], 
+form input[type="password"], 
+form input[type="text"], 
+form select, 
+form select[type="gender"] {
+  margin-bottom: 10px;
+  padding-left: 4px;
+  border: 1px solid #f0f0f0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  outline: none;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+form input[type="text"]:hover, form input[type="email"]:hover, form input[type="password"]:hover {
+  padding-left: 10px;
+}
+
+form input[type="text"]:focus, form input[type="email"]:focus, form input[type="password"]:focus {
+  border-color: #f76c00;
+}
+
+form input::-webkit-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input:-ms-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input::-ms-input-placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+form input::placeholder {
+  color: #d9d9d9;
+  padding-left: 2px;
+}
+
+/* Styles the login button. */
+form button[type="submit"] {
+  margin: 20px 0px 40px 0px;
+  background-color: #FF882B;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  font-weight: bolder;
+  font-size: 1.15em;
+  cursor: pointer;
+}
+
+form button[type="submit"]:hover {
+  background-color: #f76c00;
+}
+
+form button[type="submit"]:focus {
+  background-color: #FFEF9F;
+  padding-top: 5px;
+}
+
+form .input-label {
+  padding: 10px 0px 25px 0px;
+}
+
+/* Styles all the labels within the form tag. */
+form label {
+  color: #FFEF9F;
+  display: block;
+  float: left;
+}
+
+/* Styles the text that goes to the left of certain input fields.
+ * Such as the height and calorie goal. 
+ */
+label .input-text {
+  color: red;
+}
+
+form span {
+  float: right;
+  color: #FFEF9F;
+}
+
+form .divider {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* Controls the width of the name input fields. */
+form .divider-size {
+  width: 46%;
+}
+
+/* Controls the width of the birthday input fields. */
+form. birthday-size {
+  width: 30%;
+}
+
+/* Controls the styling of the CalPal logo. */
+.CalPal-logo{
+  margin: 0% 0% 3% 0%;
+}
+
+/* A shortened width used for the weight abd calorie goal inputs. */
+form .shortened-width {
+  width: 80%;
+}
