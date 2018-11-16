@@ -1,0 +1,85 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 15.11.2018
+-->
+
+<!-- Shows signup form -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main">
+
+  <!-- Form container -->
+  <div class="form-container">
+    <div class="form-wrapper">
+
+      <div class="center">
+        <div class="form-header">
+          <a href="{{ url_for('main.login') }}">
+            <img class="CalPal-logo"  src="../static/CalPal_logo_opaque.png" alt="The CalPal logo" width="450">
+          </a>
+        </div>
+      </div>
+
+      <!-- Error message appears -->
+      {% if loginFailure is defined %}
+      <div class="failure">
+        <p>This email is already used!</p>
+      </div>
+      {% endif %}
+
+      <!-- Form method="POST" -->
+      <form method="POST" action="{{ url_for("main.signup_page_1_redirect") }}">
+
+        <!-- Name Inputs: First and Last Name -->
+        <div class="divider">
+        <!-- First Name -->
+          <div class="divider-size">
+            <div class="input-label">
+              <label>First Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="fname" placeholder="First Name" spellcheck="false" autofocus required>
+          </div>
+
+        <!-- Last Name -->
+          <div class="divider-size">
+            <div class="input-label">
+              <label>Last Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="lname" placeholder="Last Name" spellcheck="false" required>
+          </div>
+        </div>
+        
+        <!-- Email -->
+        <div class="input-label">
+          <label>Email Address</label>
+          <span>•</span>
+        </div>
+        <input type="email" name="email" placeholder="name@company.com" spellcheck="false" required>
+
+
+        <!-- Password -->
+        <div class="input-label">
+          <label>Password</label>
+          <span>•</span>
+        </div>
+        <input type="password" name="password" placeholder="Password" spellcheck="false" required>
+
+        <!-- Submit -->
+        <button type="submit">Next</button>
+        
+      </form>
+
+      <p>Have an account? <a href="{{ url_for('main.login') }}">Sign in</a></p>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
