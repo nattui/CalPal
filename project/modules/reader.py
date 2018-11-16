@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 08.11.2018
+Revision: 15.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -48,16 +48,29 @@ def checkLogin(email, password):
       bool: True when the email and password matches the database, False otherwise.
   """
   
-  # Checks if email is in email database
-  if (email in df['Email'].values):
+  # Retrieves the entire user database. 
+  database = getDatabase()
   
-    # Checks if email and password matches the database
-    index = df.loc[df['Email'] == email].index[0]
+  # Retrieves the list of emilas and passwords. 
+  email_list = database[2]
+  password_list = database[3]
+  
+  # BUG: becomes apparent here!
+  # ~ print(email, email_list)
+  
+  # Checks if the inputted email exists in the database. 
+  if email in email_list:
     
-    if ((df['Email'][index] == email) and (df['Password'][index] == password)):
+    # Gets the index associated with the row of the user's data. 
+    user_index = email_list.index(email)
+    
+    # Returns True if the inputted email and password match
+    if email_list[user_index] == email and password_list[user_index] == password:
       return True
-          
-  return False
+  
+  # Returns False if the email is not in the database. 
+  else:
+    return False
 
 
 def getUserData(email):
@@ -65,8 +78,7 @@ def getUserData(email):
   A function that returns a user's data given the user's email. 
   This is specifically used in login_redirect. 
   
-  Returns a list of strings:
-    [first_name, last_name, gender, height]
+  Returns a list of strings
   """
   
   # Retrieves the datafile. 
@@ -80,9 +92,11 @@ def getUserData(email):
   birth_month_data  = datafile["Birth-month"]
   birth_year_data   = datafile["Birth-year"]
   height_data       = datafile["Height"]
+  weight_data       = datafile["Weight"]
+  calorie_goal_data = datafile["Calorie goal"]
   
   # Retrieves the index associated with the user's email. 
-  index = datafile.loc[df["Email"] == email].index[0]
+  index = datafile.loc[datafile["Email"] == email].index[0]
   
   # Generates a list of all relevant user data using the data columns
   # and the user's index. 
@@ -94,7 +108,9 @@ def getUserData(email):
                     birth_day_data, 
                     birth_month_data, 
                     birth_year_data, 
-                    height_data):
+                    height_data, 
+                    weight_data, 
+                    calorie_goal_data):
                     
     user_data.append(data_list[index])
   
@@ -110,7 +126,9 @@ def createUser(fname,
                birth_day, 
                birth_month, 
                birth_year, 
-               height):
+               height, 
+               weight,
+               calorie_goal):
   """
   Create users: If email is unique, add user to the database
   """
@@ -132,7 +150,9 @@ def createUser(fname,
                                 (list_birth_day,    birth_day), 
                                 (list_birth_month,  birth_month), 
                                 (list_birth_year,   birth_year), 
-                                (list_height,       height), ):
+                                (list_height,       height), 
+                                (list_weight,       weight), 
+                                (list_calorie_goal, calorie_goal), ):
       data_list.append(new_data)
     
     # Adds the email and password to a dictionary. 
@@ -147,7 +167,9 @@ def createUser(fname,
                        "Birth-day"    : list_birth_day, 
                        "Birth-month"  : list_birth_month, 
                        "Birth-year"   : list_birth_year, 
-                       "Height"       : list_height})
+                       "Height"       : list_height, 
+                       "Weight"       : list_weight, 
+                       "Calorie goal" : list_calorie_goal, })
     
     # Create a Pandas Excel writer using XlsxWriter as the engine.
     writer = pd.ExcelWriter(getDatabasePath(), engine="xlsxwriter")
@@ -178,7 +200,9 @@ def getDatabase():
                       "Birth-day", 
                       "Birth-month", 
                       "Birth-year", 
-                      "Height", ):
+                      "Height", 
+                      "Weight", 
+                      "Calorie goal"):
     
     # Retrieves the database column. 
     database_column = convert(df[column_name])
@@ -212,15 +236,17 @@ def getDatabasePath():
 df = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
 
 # Save columns as list
-list_fname       = convert(df["First Name"])
-list_lname       = convert(df["Last Name"])
-list_email       = convert(df["Email"])
-list_password    = convert(df["Password"])
-list_gender      = convert(df["Gender"])
-list_birth_day   = convert(df["Birth-day"])
-list_birth_month = convert(df["Birth-month"])
-list_birth_year  = convert(df["Birth-year"])
-list_height      = convert(df["Height"])
+list_fname        = convert(df["First Name"])
+list_lname        = convert(df["Last Name"])
+list_email        = convert(df["Email"])
+list_password     = convert(df["Password"])
+list_gender       = convert(df["Gender"])
+list_birth_day    = convert(df["Birth-day"])
+list_birth_month  = convert(df["Birth-month"])
+list_birth_year   = convert(df["Birth-year"])
+list_height       = convert(df["Height"])
+list_weight       = convert(df["Weight"])
+list_calorie_goal = convert(df["Calorie goal"])
 
 # Create a dictionary (KEY email: VALUE password) for user information
 dict_email_password = {}
