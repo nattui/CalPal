@@ -3,7 +3,7 @@
  * CalPal: A calorie tracking app.
  * Written by Nhat Nguyen and Albert Ong.
  * CMPE 131
- * Revision: 27.10.2018
+ * Revision: 16.11.2018
  * 
  * master.css
  * The master stylesheet. Used in base.html 
@@ -38,9 +38,11 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   color: #FFEF9F;
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
   background-image: linear-gradient(to right, #B02635, #F97C21);
-  background-repeat: no-repeat;
-  line-height: 1;
+  background-attachment: fixed;
 }
 
 ol, ul {
@@ -77,13 +79,11 @@ table {
 html, body, form {
   height: 100%;
   width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-html, body {
-  min-height: 100%;
-  background-color: #f8f8f8;
-  background-attachment: fixed;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+body {
+  margin: 1.5% 0% 1.5% 0%;
 }
 
 .main {
@@ -96,17 +96,17 @@ html, body {
 .form-wrapper {
   margin: 0 auto;
   height: 100%;
-  width: 70%;
+  width: 80%;
 }
 
 .form-container {
   border-radius: 5px;
   background-color: #fba56730;
+  padding: 2.5% 0% 2.5% 0%;
+  text-align: center;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 580px;
-  text-align: center;
-  padding: 4% 0% 4% 0%;
 }
 
 .form-container h1 {
@@ -135,13 +135,9 @@ html, body {
 }
 
 .form-container p a {
-/*
-  background-color: #FF882B;
-  border: 4px solid #FF882B;
-*/
   border-radius: 3px;
   color: #FFEF9F;
-  font-weight: bold;
+  font-weight: Bold;
 }
 
 .form-container a:hover {
@@ -152,40 +148,54 @@ html, body {
   font-weight: bolder;
 }
 
+/* Styles the success message in the form container. */
 .form-container .success {
+  background-color: #FF882B;
+  border-radius: 2px;
+  color: white;
   height: 40px;
   margin: 15px 0px 10px 0px;
-  border-radius: 2px;
-  color: #4bc04e;
-  background-color: #ecffec;
 }
 
+/* Styles the failure message in the form container. */
 .form-container .failure {
+  border-radius: 2px;
+  background-color: #FF882B;
+  color: white;
   height: 40px;
   margin: 15px 0px 10px 0px;
-  border-radius: 2px;
-  background-color: #ffedef;
 }
 
-form input[type="text"], form input[type="email"], form input[type="password"], form button[type="submit"] {
-  margin-bottom: 10px;
-  padding-left: 4px;
+form button[type="submit"], 
+form input[type="email"], 
+form input[type="number"], 
+form input[type="password"], 
+form input[type="text"], 
+form select, 
+form select[type="gender"] {
   border: 1px solid #f0f0f0;
+  border-radius: 3px;
+  clear: left;
+  height: 40px;
+  margin-bottom: 10px;
+  outline: none;
+  padding-left: 4px;
+  transition: 0.25s;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  width: 100%;
-  height: 40px;
-  border-radius: 3px;
-  outline: none;
   -webkit-transition: 0.25s;
-  transition: 0.25s;
+  width: 100%;
 }
 
-form input[type="text"]:hover, form input[type="email"]:hover, form input[type="password"]:hover {
+form input[type="text"]:hover, 
+form input[type="email"]:hover, 
+form input[type="password"]:hover {
   padding-left: 10px;
 }
 
-form input[type="text"]:focus, form input[type="email"]:focus, form input[type="password"]:focus {
+form input[type="text"]:focus, 
+form input[type="email"]:focus, 
+form input[type="password"]:focus {
   border-color: #f76c00;
 }
 
@@ -209,6 +219,7 @@ form input::placeholder {
   padding-left: 2px;
 }
 
+/* Styles the login button. */
 form button[type="submit"] {
   margin: 20px 0px 40px 0px;
   background-color: #FF882B;
@@ -216,6 +227,7 @@ form button[type="submit"] {
   border: none;
   color: white;
   font-weight: bolder;
+  font-size: 1.15em;
   cursor: pointer;
 }
 
@@ -232,20 +244,28 @@ form .input-label {
   padding: 10px 0px 25px 0px;
 }
 
+/* Styles all the labels within the form tag. */
 form label {
   color: #FFEF9F;
-  display: block;
   float: left;
+}
+
+/* Styles the text that goes to the left of certain input fields.
+ * Such as the height and calorie goal. 
+ */
+label .input-text {
+  color: red;
 }
 
 form span {
   float: right;
-  color: #FF7E05;
+  color: #FFEF9F;
 }
 
-form .name {
+form .divider {
   width: 100%;
   display: -webkit-box;
+  display: -ms-flexbox;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
@@ -253,7 +273,23 @@ form .name {
           justify-content: space-between;
 }
 
-form .name-size {
-  width: 46%;
+/* Controls the width of the name input fields. */
+form .divider-size {
+  width: 45%;
 }
-/*# sourceMappingURL=master.css.map */
+
+/* Controls the width of the birthday input fields. */
+form .birthday-size {
+  width: 30%;
+}
+
+/* Controls the styling of the CalPal logo. */
+.CalPal-logo{
+  margin: 0% 0% 3% 0%;
+}
+
+/* A shortened width used for the weight abd calorie goal inputs. */
+form .shortened-width {
+  display: block;
+  width: 68%;
+}
