@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 15.11.2018
+Revision: 16.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -56,7 +56,7 @@ def checkLogin(email, password):
   password_list = database[3]
   
   # BUG: becomes apparent here!
-  # ~ print(email, email_list)
+  print(email, email_list)
   
   # Checks if the inputted email exists in the database. 
   if email in email_list:
