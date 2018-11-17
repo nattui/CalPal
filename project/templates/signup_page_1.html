@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 15.11.2018
+Revision: 16.11.2018
 -->
 
 <!-- Shows signup form -->
@@ -32,7 +32,7 @@ Revision: 15.11.2018
       {% endif %}
 
       <!-- Form method="POST" -->
-      <form method="POST" action="{{ url_for("main.signup_page_1_redirect") }}">
+      <form method="POST" action="{{ url_for('main.signup_page_1_redirect') }}">
 
         <!-- Name Inputs: First and Last Name -->
         <div class="divider">

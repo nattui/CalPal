@@ -5,7 +5,7 @@ Written by Nhat Nguyen and Albert Ong.
 CMPE 131
 Revision: 16.11.2018
 
-The homepage of CalPal. 
+A page that allows the user to update their personal info. 
 -->
 
 <!-- Shows login form -->
@@ -20,30 +20,35 @@ The homepage of CalPal.
 
       <div class="center">
         <div>
-          <a href="{{ url_for('main.login') }}">
-            <img src="../static/CalPal_logo_opaque.png" alt="The CalPal logo" width="450">
+          <a href="{{ url_for('main.dashboard') }}">
+            <img src="../static/CalPal_User_info.png" alt="User info" width="350">
           </a>
         </div>
       </div>
       
-      <!-- Welcome message -->
-      <p><strong>Welcome {{fname}} {{lname}}!</strong> </p>
-      
-      <p>{{formatted_date}}</p>
+      <!-- Update successful appears -->
+      {% if updateSuccess %}
+      <div class="success">
+        <p>Your info has been updated!</p>
+      </div>
+      {% endif %}
       
     </div>
     
-    <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+    
+    
+    <form method="POST">
       <div class="divider">
         <!-- Exit button -->
         <div class="divider-size">
-            <button type="submit" name="action" value="EXIT">Exit</button>
+          <button type="submit" name="action" value="BACK">Back</button>
         </div>
       
         <!-- Update info button -->
         <div class="divider-size">
-          <button type="submit" name="action" value="UPDATE INFO">Update info</button>
+          <button type="submit" name="action" value="UPDATE">Update</button>
         </div>
+
       </div>
     </form>
     

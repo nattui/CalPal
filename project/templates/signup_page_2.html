@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 15.11.2018
+Revision: 16.11.2018
 -->
 
 <!-- Shows signup form -->
@@ -25,28 +25,28 @@ Revision: 15.11.2018
       </div>
 
       <!-- Form method="POST" -->
-      <form method="POST" action="{{ url_for("main.signup_page_2_signup_button") }}">
+      <form method="POST" action="{{ url_for('main.signup_page_2_buttons') }}">
         
         <!-- Gender -->
         <div class="input-label">
           <label>Gender</label>
           <span>•</span>
         </div>
-        <select type="gender" name="gender">
+        <select name="gender" value="Male">
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
         </select>
-        
+ 
         <!-- Birthday -->
-        <div class="input-label">
-          <label>Birthday</label>
-        </div>
-        
         <div class="divider">
-          
+        
           <!-- Birth month -->
           <div class="birthday-size">
+            <div class="input-label">
+              <label>Birthday</label>
+              <span>•</span>
+            </div>
             <select name="birth-month" value="January">
               <option value="January">January</option>
               <option value="February">February</option>
@@ -61,32 +61,36 @@ Revision: 15.11.2018
               <option value="November">November</option>
               <option value="December">December</option>
             </select>
-            
           </div>
-          
+
           <!-- Birth day -->
           <div class="birthday-size">
+            <div class="input-label">
+              <span>•</span>
+            </div>
             <input type="number" name="birth-day" value="1" min="1" max="31" autofocus> 
           </div>
           
           <!-- Birth year -->
           <div class="birthday-size">
+            <div class="input-label">
+              <span>•</span>
+            </div>
             <input type="number" name="birth-year" value="2000"  min="1900" max="2050" autofocus> 
           </div>
         </div>
         
+  
         <!-- Height -->
         <div class="divider">
         
-          <!-- Feet -->
+        <!-- Feet -->
           <div class="divider-size">
-          
-            <div class="divider-label">
+            <div class="input-label">
               <label>Height</label>
               <span>•</span>
             </div>
-            
-            <input type="number" name="height-feet" value="0" min="0" max="99" autofocus> feet
+            <input type="number" name="height-feet" value="0" min="0" max="99"> <label>ft</label>
           </div>
 
         <!-- Inches -->
@@ -94,43 +98,64 @@ Revision: 15.11.2018
             <div class="input-label">
               <span>•</span>
             </div>
-            <input type="number" name="height-inches" value="0" min="0" max="12" autofocus> inches
+            <input type="number" name="height-inches" value="0" min="0" max="12" autofocus> <label>in</label>
           </div>
         </div>
-        
+
         
         <!-- Weight -->
+        <div class="shortened-width">
+          <div class="input-label">
+            <label>Weight</label>
+            <span>•</span>
+          </div>
+          <div>
+            <input type="number" name="weight" value="0" min="0" max="9999" autofocus> <label>lbs</label>
+          </div>
+        </div>
+        <br>
+        
+        <!-- Calorie goal -->
+        <div class="shortened-width">
+          <div class="input-label">
+            <label>Calorie Goal</label>
+            <span>•</span>
+            </div>
+          <input type="number" name="calorie-goal" value="0"  min="0" max="9999"> <label>calories per day</label>
+        </div>
+        
+        <!-- Weight -->
+<!--
         <div class="input-label">
           <label>Weight</label>
           <span>•</span>
+          <input type="number" name="weight" value="0" min="0" max="9999" autofocus> <label>lbs</label>
         </div>
-        
-        <div class=shortened-width>
-          <input type="number" name="weight" value="0" min="0" max="9999" autofocus> lbs
-        </div>
+-->
         
         <!-- Calorie Goal -->
+<!--
         <div class="input-label">
           <label>Calorie Goal</label>
           <span>•</span>
         </div>
         
-        <div class=shortened-width>
-          <input type="number" name="calorie-goal" value="0"  min="0" max="9999" autofocus> calories per day
+        <div>
+          <input type="number" name="calorie-goal" value="0"  min="0" max="9999" autofocus> <label>calories per day</label>
         </div>
-
+-->
+        
+        
         <div class="divider">
-          <!-- Back button 
-          It's supposed to return to signup_page_1 when pressed, but it
-          doesn't work yet. I'm so sad about that :(
-          -->
+        
+          <!-- Back button --> 
           <div class="divider-size">
-            <button type="submit" name="back-button" value="back">Back</button>
+            <button type="submit" name="action" value="BACK">Back</button>
           </div>
-      
-          <!-- Submit button -->
+        
+            <!-- Submit button -->
           <div class="divider-size">
-            <button type="submit" name="sign-up-button" value="sign-up">Sign up</button>
+            <button type="submit" name="action" value="SIGN UP">Sign up</button>
           </div>
         </div>
         
