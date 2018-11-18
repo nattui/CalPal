@@ -3,7 +3,7 @@
  * CalPal: A calorie tracking app.
  * Written by Nhat Nguyen and Albert Ong.
  * CMPE 131
- * Revision: 16.11.2018
+ * Revision: 17.11.2018
  * 
  * master.css
  * The master stylesheet. Used in base.html 
@@ -166,6 +166,7 @@ body {
   margin: 15px 0px 10px 0px;
 }
 
+/* Styles various input tags inside the form tag. */
 form button[type="submit"], 
 form input[type="email"], 
 form input[type="number"], 
@@ -219,7 +220,7 @@ form input::placeholder {
   padding-left: 2px;
 }
 
-/* Styles the login button. */
+/* Styles the sumbit buttons inside the form tag. */
 form button[type="submit"] {
   margin: 20px 0px 40px 0px;
   background-color: #FF882B;
@@ -240,21 +241,25 @@ form button[type="submit"]:focus {
   padding-top: 5px;
 }
 
+/* Styles the input labels within the form tag. */
 form .input-label {
   padding: 10px 0px 25px 0px;
+}
+
+/* Styles the height input labels within the form tag. */
+form .height-input-label {
+  padding: 10px 40px 25px 0px;
+}
+
+/* Styles the weight and calorie goal input labels within the form tag. */
+form .weight-calorie-input-label {
+  padding: 10px 140px 25px 0px;
 }
 
 /* Styles all the labels within the form tag. */
 form label {
   color: #FFEF9F;
   float: left;
-}
-
-/* Styles the text that goes to the left of certain input fields.
- * Such as the height and calorie goal. 
- */
-label .input-text {
-  color: red;
 }
 
 form span {
@@ -273,7 +278,7 @@ form .divider {
           justify-content: space-between;
 }
 
-/* Controls the width of the name input fields. */
+/* Controls the width of divided input fields. */
 form .divider-size {
   width: 45%;
 }
@@ -290,6 +295,15 @@ form .birthday-size {
 
 /* A shortened width used for the weight abd calorie goal inputs. */
 form .shortened-width {
-  display: block;
-  width: 68%;
+  width: 70%;
 }
+
+/* Styles the text that goes to the right of input tags. */
+form .input-details-text {
+  margin: 8px 0px 0px 6px;
+}
+
+form .height-input-width {
+  width: 80%;
+}
+
