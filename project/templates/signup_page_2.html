@@ -3,7 +3,8 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 16.11.2018
+
+Revision: 17.11.2018
 -->
 
 <!-- Shows signup form -->
@@ -79,73 +80,67 @@ Revision: 16.11.2018
             <input type="number" name="birth-year" value="2000"  min="1900" max="2050" autofocus> 
           </div>
         </div>
-        
+
   
         <!-- Height -->
         <div class="divider">
         
-        <!-- Feet -->
+          <!-- Feet -->
           <div class="divider-size">
-            <div class="input-label">
+            <div class="height-input-label">
               <label>Height</label>
               <span>•</span>
             </div>
-            <input type="number" name="height-feet" value="0" min="0" max="99"> <label>ft</label>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-feet" value="0" min="0" max="99">
+            </label>
+            
+            <label class="input-details-text">ft</label>
           </div>
 
-        <!-- Inches -->
+          <!-- Inches -->
           <div class="divider-size">
-            <div class="input-label">
+            <div class="height-input-label">
               <span>•</span>
             </div>
-            <input type="number" name="height-inches" value="0" min="0" max="12" autofocus> <label>in</label>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-inches" value="0" min="0" max="12" autofocus>
+            </label>
+            
+            <label class="input-details-text">in</label>
           </div>
         </div>
 
         
         <!-- Weight -->
-        <div class="shortened-width">
-          <div class="input-label">
-            <label>Weight</label>
-            <span>•</span>
-          </div>
-          <div>
-            <input type="number" name="weight" value="0" min="0" max="9999" autofocus> <label>lbs</label>
-          </div>
-        </div>
-        <br>
-        
-        <!-- Calorie goal -->
-        <div class="shortened-width">
-          <div class="input-label">
-            <label>Calorie Goal</label>
-            <span>•</span>
-            </div>
-          <input type="number" name="calorie-goal" value="0"  min="0" max="9999"> <label>calories per day</label>
-        </div>
-        
-        <!-- Weight -->
-<!--
-        <div class="input-label">
+        <div class="weight-calorie-input-label">
           <label>Weight</label>
           <span>•</span>
-          <input type="number" name="weight" value="0" min="0" max="9999" autofocus> <label>lbs</label>
         </div>
--->
         
-        <!-- Calorie Goal -->
-<!--
-        <div class="input-label">
+        <label class="shortened-width">
+          <input type="number" name="weight" value="0" min="0" max="9999" autofocus>
+        </label>
+        
+        <label class="input-details-text">lbs</label>
+        <br><br>
+        
+        
+        <!-- Calorie goal -->
+        <div class="weight-calorie-input-label">
           <label>Calorie Goal</label>
           <span>•</span>
         </div>
         
-        <div>
-          <input type="number" name="calorie-goal" value="0"  min="0" max="9999" autofocus> <label>calories per day</label>
-        </div>
--->
+        <label class="shortened-width">
+          <input type="number" name="calorie-goal" value="0"  min="0" max="9999">
+        </label>
+        <label class="input-details-text">calories per day</label>
+
         
-        
+        <!-- Back and Sign Up buttons -->
         <div class="divider">
         
           <!-- Back button --> 
@@ -153,11 +148,12 @@ Revision: 16.11.2018
             <button type="submit" name="action" value="BACK">Back</button>
           </div>
         
-            <!-- Submit button -->
+            <!-- Sign Up button -->
           <div class="divider-size">
             <button type="submit" name="action" value="SIGN UP">Sign up</button>
           </div>
         </div>
+        
         
       </form>
       
