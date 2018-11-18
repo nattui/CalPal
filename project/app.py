@@ -1,9 +1,9 @@
-
+#!/usr/bin/python3
 """
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 16.11.2018
+Revision: 17.11.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
@@ -16,17 +16,22 @@ immediately after data input.
 
 from calendar import month_name
 from datetime import datetime
+
 from flask import (Flask, 
                    render_template, 
                    redirect, url_for, 
                    request, 
                    Blueprint, 
                    session)
+                   
+from modules.module import mergeHeight, splitHeight
+
 from modules.reader import (checkLogin, 
                             checkEmail, 
                             getDatabase, 
                             getUserData,
-                            createUser)
+                            createUser, 
+                            writeNewUserData)
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key"
@@ -57,9 +62,18 @@ def login_redirect():
     # Retrieves the user's data.
     user_data = getUserData(session["email"])
     
-    # Assigns the first and last names as attributes to session. 
-    session["fname"] = user_data[0]
-    session["lname"] = user_data[1]
+    # Assigns the remaining as attributes to session. 
+    for var_index, var_name in enumerate(("fname", 
+                                          "lname", 
+                                          "gender", 
+                                          "birth-day", 
+                                          "birth-month", 
+                                          "birth-year", 
+                                          "height", 
+                                          "weight", 
+                                          "calorie-goal")):
+                                          
+      session[var_name] = user_data[var_index]
     
     # If user information matches the information in the database, continue to application
     if checkLogin(session["email"], session["password"]):
@@ -130,7 +144,7 @@ def signup_page_2_buttons():
     height_inches = int(request.form["height-inches"])
     
     # Sums the total height in inches and converts it into a string. 
-    total_height = str((height_feet * 12) + height_inches)
+    total_height = str(mergeHeight(height_feet, height_inches))
 
     # Uses a for loop to iterate through every piece of user information.
     for var_name in ("gender", 
@@ -221,7 +235,7 @@ def dashboard():
     # Formats the current date into a sentence. 
     formatted_date = " ".join(["Today is", current_month, current_day + ",", current_year + "."])
 
-    return render_template("app.html", 
+    return render_template("dashboard.html", 
                            email = email, 
                            password = password, 
                            fname = fname,
@@ -260,7 +274,26 @@ def dashboard_buttons():
 # The update user info page. 
 @main.route("/dashboard/update_user_info")
 def update_user_info(updateSuccess = False):
-  return render_template("update_user_info.html", updateSuccess = updateSuccess)
+  
+  # Calculates the user's height in both feet and inches.
+  split_height  = splitHeight(session["height"]) 
+  height_feet   = split_height[0]
+  height_inches = split_height[1]
+  
+  return render_template("update_user_info.html", 
+                         fname         = session["fname"],
+                         lname         = session["lname"],
+                         email         = session["email"], 
+                         password      = session["password"],
+                         gender        = session["gender"],
+                         birth_day     = session["birth-day"],
+                         birth_month   = session["birth-month"],
+                         birth_year    = session["birth-year"],
+                         height_feet   = height_feet,
+                         height_inches = height_inches,
+                         weight        = session["weight"],
+                         calorie_goal  = session["calorie-goal"],
+                         updateSuccess = updateSuccess)
 
 
 # Controls the buttons for the update user info page. 
@@ -276,6 +309,43 @@ def update_user_info_buttons():
     return redirect(url_for("main.dashboard"))
   
   elif action_name == "UPDATE":
+    
+    # Retrieves all the new, inputted values. 
+    new_fname         = request.form["fname"]
+    new_lname         = request.form["lname"]
+    new_email         = request.form["email"]
+    new_password      = request.form["password"]
+    new_gender        = request.form["gender"]
+    new_birth_day     = request.form["birth-day"]
+    new_birth_month   = request.form["birth-month"]
+    new_birth_year    = request.form["birth-year"]
+    new_height_feet   = int(request.form["height-feet"])
+    new_height_inches = int(request.form["height-inches"])
+    new_weight        = request.form["weight"]
+    new_calorie_goal  = request.form["calorie-goal"]
+    
+    # Calculates the new, total height. 
+    new_total_height = mergeHeight(new_height_feet, new_height_inches)
+    
+    new_user_data = [new_fname, 
+                     new_lname, 
+                     new_email, 
+                     new_password, 
+                     new_gender, 
+                     new_birth_day, 
+                     new_birth_month, 
+                     new_birth_year, 
+                     new_total_height, 
+                     new_weight, 
+                     new_calorie_goal]
+    
+    # Need to finish writing this later...
+    # This block of code needs to both write the new user data
+    # to database.xlsx as well as redefine all the attributes in
+    # session. 
+    
+    writeNewUserData(session["email"], new_user_data)
+    
     return update_user_info(updateSuccess = True)
 
 
