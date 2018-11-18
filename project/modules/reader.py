@@ -1,9 +1,9 @@
-
+#!/usr/bin/python3
 """
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 16.11.2018
+Revision: 17.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -111,8 +111,15 @@ def getUserData(email):
                     height_data, 
                     weight_data, 
                     calorie_goal_data):
-                    
-    user_data.append(data_list[index])
+
+    # When integers are read, they're actually read as int64 types.
+    # This converts them to conventional ints.  
+    try:
+      add_data = int(data_list[index])
+    except ValueError:
+      add_data = data_list[index]
+    
+    user_data.append(add_data)
   
   # Returns the user's data.
   return user_data
@@ -180,6 +187,22 @@ def createUser(fname,
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
 
+
+def writeNewUserData(old_email, new_user_data):
+  """
+  Writes a set of new user data to database.xlsx. 
+  """
+  # Retrieves the datafile. 
+  datafile = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
+
+  # Retrieves the index associated with the user's previous email. 
+  index = datafile.loc[datafile["Email"] == old_email].index[0]
+  
+  print(old_email, new_user_data)
+  
+  # Need to finish writing this later... -Albert
+  
+  
 
 def getDatabase():
   """
