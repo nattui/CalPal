@@ -3,15 +3,11 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 17.11.2018
+Revision: 20.11.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
 TODO: Finish the dashboard page
-
-Bug: Immediately after creating an account. the app will still not let you
-login. This has something to do with data retrieval not updating
-immediately after data input. 
 """
 
 from calendar import month_name
@@ -24,8 +20,11 @@ from flask import (Flask,
                    Blueprint, 
                    session)
                    
-from modules.module import mergeHeight, splitHeight
-
+from modules.module import (monthNameToNumber,
+                            monthNumberToName,
+                            mergeHeight, 
+                            splitHeight)
+                            
 from modules.reader import (checkLogin, 
                             checkEmail, 
                             getDatabase, 
@@ -59,12 +58,19 @@ def login_redirect():
     session["email"] = request.form["email"]
     session["password"] = request.form["password"]
     
-    # Retrieves the user's data.
-    user_data = getUserData(session["email"])
+    # Attempts to retrieve the user's data.
+    try: 
+      user_data = getUserData(session["email"])
+    
+    # Returns displays an error message is the email is not currently registered.
+    except IndexError:
+      return render_template("login.html", unusedEmail = True)
     
     # Assigns the remaining as attributes to session. 
     for var_index, var_name in enumerate(("fname", 
                                           "lname", 
+                                          "email",
+                                          "password",
                                           "gender", 
                                           "birth-day", 
                                           "birth-month", 
@@ -72,7 +78,6 @@ def login_redirect():
                                           "height", 
                                           "weight", 
                                           "calorie-goal")):
-                                          
       session[var_name] = user_data[var_index]
     
     # If user information matches the information in the database, continue to application
@@ -160,26 +165,10 @@ def signup_page_2_buttons():
       
         # Retrieves the name of the user's birth month. 
         month_name = request.form[var_name]
-        
-        # A dictionary that converts a month name to its 
-        # corresponding number. 
-        month_name_to_number = \
-          {"January"   : "1",
-           "February"  : "2", 
-           "March"     : "3",
-           "April"     : "4", 
-           "May"       : "5",
-           "June"      : "6", 
-           "July"      : "7",
-           "August"    : "8", 
-           "September" : "9",
-           "October"   : "10", 
-           "November"  : "11",  
-           "December"  : "12", }
           
         # Converts the the user's birth month to its
         # corresponing number. 
-        month_num = month_name_to_number[month_name]
+        month_num = monthNameToNumber(month_name)
         
         # Assigns the month number as an attribute. 
         session[var_name] = month_num
@@ -195,17 +184,17 @@ def signup_page_2_buttons():
         session[var_name] = request.form[var_name]
         
     # Creates a new user based on the user's inputted data. 
-    createUser(session["fname"], 
-               session["lname"], 
-               session["email"],
-               session["password"], 
-               session["gender"], 
-               session["birth-day"], 
-               session["birth-month"], 
-               session["birth-year"], 
-               session["height"], 
-               session["weight"], 
-               session["calorie-goal"])
+    createUser([session["fname"], 
+                session["lname"], 
+                session["email"],
+                session["password"], 
+                session["gender"], 
+                session["birth-day"], 
+                session["birth-month"], 
+                session["birth-year"], 
+                session["height"], 
+                session["weight"], 
+                session["calorie-goal"]])
       
     # Returns to the login page and displays a success message. 
     return redirect(url_for("main.signup_success"))
@@ -215,10 +204,9 @@ def signup_page_2_buttons():
 @main.route("/dashboard")
 def dashboard():
   
+  # Attempts to retrieve the first name, last name, email, and 
+  # password of the user. 
   try:
-  
-    # Attempts to retrieve the first name, last name, email, and 
-    # password of the user. 
     fname = session["fname"]
     lname = session["lname"]
     email = session['email']
@@ -273,13 +261,13 @@ def dashboard_buttons():
 
 # The update user info page. 
 @main.route("/dashboard/update_user_info")
-def update_user_info(updateSuccess = False):
+def update_user_info(updateSuccess = False, usedEmail = False):
   
   # Calculates the user's height in both feet and inches.
-  split_height  = splitHeight(session["height"]) 
+  split_height  = splitHeight(int(session["height"]))
   height_feet   = split_height[0]
   height_inches = split_height[1]
-  
+
   return render_template("update_user_info.html", 
                          fname         = session["fname"],
                          lname         = session["lname"],
@@ -293,7 +281,8 @@ def update_user_info(updateSuccess = False):
                          height_inches = height_inches,
                          weight        = session["weight"],
                          calorie_goal  = session["calorie-goal"],
-                         updateSuccess = updateSuccess)
+                         updateSuccess = updateSuccess, 
+                         usedEmail     = usedEmail)
 
 
 # Controls the buttons for the update user info page. 
@@ -308,46 +297,72 @@ def update_user_info_buttons():
   if action_name == "BACK":
     return redirect(url_for("main.dashboard"))
   
+  # If the update info button was pressed...
   elif action_name == "UPDATE":
     
-    # Retrieves all the new, inputted values. 
-    new_fname         = request.form["fname"]
-    new_lname         = request.form["lname"]
-    new_email         = request.form["email"]
-    new_password      = request.form["password"]
-    new_gender        = request.form["gender"]
-    new_birth_day     = request.form["birth-day"]
-    new_birth_month   = request.form["birth-month"]
-    new_birth_year    = request.form["birth-year"]
-    new_height_feet   = int(request.form["height-feet"])
-    new_height_inches = int(request.form["height-inches"])
-    new_weight        = request.form["weight"]
-    new_calorie_goal  = request.form["calorie-goal"]
+    # Retrieves the inputted email. 
+    new_email = request.form["email"]
     
-    # Calculates the new, total height. 
-    new_total_height = mergeHeight(new_height_feet, new_height_inches)
+    # Checks if the inputted email is either unused in the current database
+    # or is the user's current email.
+    viable_email = (not checkEmail(new_email)) or \
+                   (new_email == session["email"])
     
-    new_user_data = [new_fname, 
-                     new_lname, 
-                     new_email, 
-                     new_password, 
-                     new_gender, 
-                     new_birth_day, 
-                     new_birth_month, 
-                     new_birth_year, 
-                     new_total_height, 
-                     new_weight, 
-                     new_calorie_goal]
+    # If the inputted email was viable...
+    if viable_email:
     
-    # Need to finish writing this later...
-    # This block of code needs to both write the new user data
-    # to database.xlsx as well as redefine all the attributes in
-    # session. 
-    
-    writeNewUserData(session["email"], new_user_data)
-    
-    return update_user_info(updateSuccess = True)
-
+      # Retrieves all the new inputted values. 
+      new_fname         = request.form["fname"]
+      new_lname         = request.form["lname"]
+      new_password      = request.form["password"]
+      new_gender        = request.form["gender"]
+      new_birth_day     = request.form["birth-day"]
+      new_birth_month   = monthNameToNumber(request.form["birth-month"]) # Converts month name to number. 
+      new_birth_year    = request.form["birth-year"]
+      new_height_feet   = int(request.form["height-feet"])
+      new_height_inches = int(request.form["height-inches"])
+      new_weight        = request.form["weight"]
+      new_calorie_goal  = request.form["calorie-goal"]
+      
+      # Calculates the new, total height. 
+      new_total_height = mergeHeight(new_height_feet, new_height_inches)
+      
+      # A list of the new user data. 
+      new_user_data = [new_fname, 
+                       new_lname, 
+                       new_email, 
+                       new_password, 
+                       new_gender, 
+                       new_birth_day, 
+                       new_birth_month, 
+                       new_birth_year, 
+                       new_total_height, 
+                       new_weight, 
+                       new_calorie_goal]
+      
+      # Writes the new data to database.xlsx. 
+      writeNewUserData(session["email"], new_user_data)
+      
+      # Assigns the new data as attributes to session. 
+      for var_index, var_name in enumerate(("fname", 
+                                            "lname", 
+                                            "email",
+                                            "password",
+                                            "gender", 
+                                            "birth-day", 
+                                            "birth-month", 
+                                            "birth-year", 
+                                            "height", 
+                                            "weight", 
+                                            "calorie-goal")):
+        session[var_name] = new_user_data[var_index]
+      
+      # Reloads the same page except with an update successful message. 
+      return update_user_info(updateSuccess = True)
+  
+    # Displays an error message is the email is already used. 
+    else:
+      return update_user_info(usedEmail = True)
 
 app.register_blueprint(main)
 
