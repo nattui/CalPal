@@ -3,11 +3,47 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 17.11.2018
+Revision: 20.11.2018
 
 module.py
-A Python module for extraneous functions. 
+A Python module for extraneous functions and variables.
 """
+
+from calendar import month_name
+
+
+def monthNameToNumber(month_name):
+  """
+  Takes the name of a month and returns its corresponding number.
+  """
+  
+  # A dictionary that converts a month name to its 
+  # corresponding number. 
+  month_name_to_number = \
+    {"January"   : 1,
+     "February"  : 2, 
+     "March"     : 3,
+     "April"     : 4, 
+     "May"       : 5,
+     "June"      : 6, 
+     "July"      : 7,
+     "August"    : 8, 
+     "September" : 9,
+     "October"   : 10, 
+     "November"  : 11,  
+     "December"  : 12, }
+     
+  return month_name_to_number[month_name]
+
+
+def monthNumberToName(month_number):
+  """
+  Takes a number between 1 and 12, represented as a string, 
+  and returns the corresponing month name. 
+  """
+  month_index = int(month_number)
+  return month_name[month_index]
+  
 
 def mergeHeight(feet, inches):
   """

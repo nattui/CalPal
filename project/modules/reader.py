@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 17.11.2018
+Revision: 20.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -33,7 +33,9 @@ def checkEmail(email):
   """
   Checks if a given email is currently in the database. 
   """
-  return email in list_email
+  email_list = getDatabase()[2]
+  
+  return email in email_list
 
 
 def checkLogin(email, password):
@@ -54,9 +56,6 @@ def checkLogin(email, password):
   # Retrieves the list of emilas and passwords. 
   email_list = database[2]
   password_list = database[3]
-  
-  # BUG: becomes apparent here!
-  print(email, email_list)
   
   # Checks if the inputted email exists in the database. 
   if email in email_list:
@@ -84,33 +83,14 @@ def getUserData(email):
   # Retrieves the datafile. 
   datafile = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
   
-  # Retreives all relevant columns user data. 
-  first_name_data   = datafile["First Name"]
-  last_name_data    = datafile["Last Name"]
-  gender_data       = datafile["Gender"]
-  birth_day_data    = datafile["Birth-day"]
-  birth_month_data  = datafile["Birth-month"]
-  birth_year_data   = datafile["Birth-year"]
-  height_data       = datafile["Height"]
-  weight_data       = datafile["Weight"]
-  calorie_goal_data = datafile["Calorie goal"]
-  
   # Retrieves the index associated with the user's email. 
   index = datafile.loc[datafile["Email"] == email].index[0]
   
-  # Generates a list of all relevant user data using the data columns
-  # and the user's index. 
+  # A list that will eventually store all of ther user's data. 
   user_data = []
   
-  for data_list in (first_name_data, 
-                    last_name_data, 
-                    gender_data, 
-                    birth_day_data, 
-                    birth_month_data, 
-                    birth_year_data, 
-                    height_data, 
-                    weight_data, 
-                    calorie_goal_data):
+  # Iterates though ever list in the database. 
+  for data_list in getDatabase():
 
     # When integers are read, they're actually read as int64 types.
     # This converts them to conventional ints.  
@@ -119,73 +99,56 @@ def getUserData(email):
     except ValueError:
       add_data = data_list[index]
     
+    # Adds the piece of data to user_data. 
     user_data.append(add_data)
   
   # Returns the user's data.
   return user_data
 
 
-def createUser(fname, 
-               lname, 
-               email, 
-               password, 
-               gender, 
-               birth_day, 
-               birth_month, 
-               birth_year, 
-               height, 
-               weight,
-               calorie_goal):
+def createUser(new_user_data):
   """
-  Create users: If email is unique, add user to the database
+  Creates a new users if the inputted email is unique.
+  
+  new_user_data is formatted:
+    [fname, 
+     lname, 
+     email, 
+     password, 
+     gender, 
+     birth_day, 
+     birth_month, 
+     birth_year, 
+     height, weight, 
+     calorie_goal]
   """
   
-  # Checks if the email is in the database. 
-  isEmailInDatabase = email in list_email
+  # Retrieves the inputted email. 
+  email = new_user_data[2]
   
   # Only creates a new user if the email is not currently 
   # in the database. 
-  if not isEmailInDatabase:
+  if not checkEmail(email):
     
-    # Uses a for loop to add each data field to 
-    # their respective columns. 
-    for data_list, new_data in ((list_fname,        fname), 
-                                (list_lname,        lname), 
-                                (list_email,        email), 
-                                (list_password,     password), 
-                                (list_gender,       gender), 
-                                (list_birth_day,    birth_day), 
-                                (list_birth_month,  birth_month), 
-                                (list_birth_year,   birth_year), 
-                                (list_height,       height), 
-                                (list_weight,       weight), 
-                                (list_calorie_goal, calorie_goal), ):
-      data_list.append(new_data)
-    
-    # Adds the email and password to a dictionary. 
+    # Adds the email and password to a dictionary.
+    password = new_user_data[3] 
     dict_email_password[email] = password
 
-    # Creates a Pandas dataframe from the data.
-    df = pd.DataFrame({"First Name"   : list_fname, 
-                       "Last Name"    : list_lname, 
-                       "Email"        : list_email, 
-                       "Password"     : list_password, 
-                       "Gender"       : list_gender, 
-                       "Birth-day"    : list_birth_day, 
-                       "Birth-month"  : list_birth_month, 
-                       "Birth-year"   : list_birth_year, 
-                       "Height"       : list_height, 
-                       "Weight"       : list_weight, 
-                       "Calorie goal" : list_calorie_goal, })
+    # A list that will eventually become the new database. 
+    new_database = []
     
-    # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter(getDatabasePath(), engine="xlsxwriter")
-
-    # Convert the dataframe to an XlsxWriter Excel object.
-    df.to_excel(writer, sheet_name='Sheet1')
-
-    # Close the Pandas Excel writer and output the Excel file.
-    writer.save()
+    # Iterates through every column in the database. 
+    for index, column in enumerate(getDatabase()):
+      
+      # Appends the new user data to the column.
+      column.append(new_user_data[index])
+      
+      # Appends the column, now with the new user data added, to
+      # the new database. 
+      new_database.append(column)
+    
+    # Writes the new database to database.xlsx
+    writeToDatabase(new_database)
 
 
 def writeNewUserData(old_email, new_user_data):
@@ -196,12 +159,24 @@ def writeNewUserData(old_email, new_user_data):
   datafile = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
 
   # Retrieves the index associated with the user's previous email. 
-  index = datafile.loc[datafile["Email"] == old_email].index[0]
+  user_index = datafile.loc[datafile["Email"] == old_email].index[0]
   
-  print(old_email, new_user_data)
+  # A list that will eventually store the updated user batabase. 
+  updated_database = []
   
-  # Need to finish writing this later... -Albert
-  
+  # Iterates through every column in the database. 
+  for data_index, column in enumerate(getDatabase()):
+    
+    # Replaces the value in the column at the given user's index
+    # with the new user data. 
+    column[user_index] = new_user_data[data_index]
+    
+    # Adds the column to the updated database. 
+    updated_database.append(column)
+    
+  # Writes the updated database to database.xlsx. 
+  writeToDatabase(updated_database)
+
   
 
 def getDatabase():
@@ -209,6 +184,9 @@ def getDatabase():
   Returns the entire user database, including all user names, emails
   passwords, and other information. 
   """
+  
+  # Create a Pandas dataframe from the excel file
+  df = pd.read_excel(getDatabasePath(), sheet_name="Sheet1")
   
   # A list that will store all the values in the database.
   # This will be the final output. 
@@ -235,6 +213,46 @@ def getDatabase():
   
   # Returns the final output. 
   return database
+  
+
+def writeToDatabase(new_database):
+  """
+  Takes a list of columns and writes the columns to database.xlsx
+  
+  This function is used in both createUser and writeNewUserData. 
+  """
+  
+  # A dictionary that will store the column names as keys
+  # and a list of data as values. 
+  dataframe_dict = {}
+  
+  # Uses a for loop to interate through each column name
+  for column_index, column_name in enumerate(("First Name", 
+                                              "Last Name", 
+                                              "Email", 
+                                              "Password", 
+                                              "Gender", 
+                                              "Birth-day", 
+                                              "Birth-month", 
+                                              "Birth-year", 
+                                              "Height", 
+                                              "Weight", 
+                                              "Calorie goal")):
+    
+    # Assigns the column name to the list in the new database. 
+    dataframe_dict[column_name] = new_database[column_index]
+  
+    # Creates a Pandas dataframe from the data.
+    df = pd.DataFrame(dataframe_dict)
+    
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter(getDatabasePath(), engine="xlsxwriter")
+
+    # Convert the dataframe to an XlsxWriter Excel object.
+    df.to_excel(writer, sheet_name='Sheet1')
+
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.save()
 
 
 def getDatabasePath():
@@ -250,7 +268,6 @@ def getDatabasePath():
     
   return database_path
   
-
 
 #=======================================================================
 
@@ -291,13 +308,4 @@ if __name__ == "__main__":
 
     print(getUserData("stan.smith@gmail.com"))
     
-    # ~ createUser(fname, 
-               # ~ lname, 
-               # ~ email, 
-               # ~ password, 
-               # ~ gender, 
-               # ~ birth_day, 
-               # ~ birth_month, 
-               # ~ birth_year, 
-               # ~ height)
     
