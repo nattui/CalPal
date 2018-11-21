@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 17.11.2018
+Revision: 20.11.2018
 
 A page that allows the user to update their personal info. 
 -->
@@ -28,6 +28,13 @@ A page that allows the user to update their personal info.
       {% if updateSuccess %}
       <div class="success">
         <p>Your info has been updated!</p>
+      </div>
+      {% endif %}
+      
+      <!-- Email already used message -->
+      {% if usedEmail %}
+      <div class="failure">
+        <p>That email has already been used.</p>
       </div>
       {% endif %}
       
@@ -83,7 +90,7 @@ A page that allows the user to update their personal info.
             <div class="input-label">
               <label>Birthday</label>
             </div>
-            
+             
             <select name="birth-month" value="January">
               <option value="January"   {% if birth_month == 1 %} selected="selected" {% endif %}>January</option>
               <option value="February"  {% if birth_month == 2 %} selected="selected" {% endif %}>February</option>
@@ -190,7 +197,4 @@ A page that allows the user to update their personal info.
   </div>
 </div>
       
-
-
-
 {% endblock %}

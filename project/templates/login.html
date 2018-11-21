@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 16.11.2018
+Revision: 20.11.2018
 -->
 
 <!-- Shows login form -->
@@ -31,10 +31,17 @@ Revision: 16.11.2018
         </div>
         {% endif %}
 
-        <!-- Error message appears -->
+        <!-- Login failure message appears -->
         {% if loginFailure is defined %}
         <div class="failure">
           <p>Incorrect email or password combination.</p>
+        </div>
+        {% endif %}
+
+        <!-- Unused email message appears -->
+        {% if unusedEmail is defined %}
+        <div class="failure">
+          <p>That email is not currently registered.</p>
         </div>
         {% endif %}
 
