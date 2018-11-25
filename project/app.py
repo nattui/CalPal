@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 20.11.2018
+Revision: 24.11.2018
 
 This is where the python flask code occupies
 TODO: Reseach G package
@@ -27,7 +27,9 @@ from modules.module import (monthNameToNumber,
                             
 from modules.reader import (checkLogin, 
                             checkEmail, 
-                            getDatabase, 
+                            getExerciseDatabase,
+                            getFoodDatabase,
+                            getUserDatabase, 
                             getUserData,
                             createUser, 
                             writeNewUserData)
@@ -79,6 +81,11 @@ def login_redirect():
                                           "weight", 
                                           "calorie-goal")):
       session[var_name] = user_data[var_index]
+      
+    # Assigns the number for rows for exercise and food inputs.
+    # The default number is 3. 
+    session["exercise_rows"] = 3
+    session["food_rows"] = 3
     
     # If user information matches the information in the database, continue to application
     if checkLogin(session["email"], session["password"]):
@@ -222,13 +229,21 @@ def dashboard():
     
     # Formats the current date into a sentence. 
     formatted_date = " ".join(["Today is", current_month, current_day + ",", current_year + "."])
-
+    
+    # Retrieves the list of exercises and foods.
+    exercise_list = getExerciseDatabase()[0]
+    food_list = getFoodDatabase()[1]
+    
     return render_template("dashboard.html", 
-                           email = email, 
-                           password = password, 
-                           fname = fname,
-                           lname = lname, 
-                           formatted_date = formatted_date)
+                           email          = email, 
+                           password       = password, 
+                           fname          = fname,
+                           lname          = lname, 
+                           formatted_date = formatted_date, 
+                           exercise_list  = exercise_list,
+                           food_list      = food_list, 
+                           exercise_rows  = session["exercise_rows"], 
+                           food_rows      = session["food_rows"])
   except:
     
     # Redirects to the login page otherwise. 
@@ -240,11 +255,31 @@ def dashboard():
 def dashboard_buttons():
   
   # Retrieves the name of the action. 
-  # This value will either be EXIT or UPDATE INFO. 
+  # This value will either be ADD_FOOD_ROW, SUB_FOOD_ROW, 
+  # EXIT, or UPDATE INFO. 
   action_name = request.form.get("action")
   
+  # If the add food row button was pressed... 
+  if action_name == "ADD_FOOD_ROW":
+    
+    # Increments the number of food rows.
+    session["food_rows"] += 1
+    
+    # Reloads the dashboard page.
+    return dashboard()
+  
+  # If the subtract food row button was pressed... 
+  elif action_name == "SUB_FOOD_ROW":
+    
+    # Decrements the number of food rows if there are more than 3 rows.
+    if session["food_rows"] > 3:
+      session["food_rows"] -= 1
+    
+    # Reloads the dashboard page.
+    return dashboard()
+  
   # If the update info button was pressed... 
-  if action_name == "UPDATE INFO":
+  elif action_name == "UPDATE INFO":
     
     # Redirects to the update user info page. 
     return redirect(url_for("main.update_user_info"))
