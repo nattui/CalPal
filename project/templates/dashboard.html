@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 17.11.2018
+Revision: 24.11.2018
 
 The dashboard of CalPal. 
 -->
@@ -25,12 +25,55 @@ The dashboard of CalPal.
       </div>
       
       <!-- Welcome message -->
-      <p><strong>Welcome {{fname}} {{lname}}!</strong></p>
-      
-      {{formatted_date}}
+      <p><h2>Welcome {{fname}} {{lname}}!</h2</p>
+      <h2>{{formatted_date}}</h2>
     
-    <!-- Exit and Update info buttons -->
     <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+      
+      <table style="width: 100%">
+        <tr>
+          <th>Food</th>
+          <th>Oz</th>
+          <th>Calories gained</th> 
+        </tr>
+        
+        <!-- Generates multiple rows -->
+        {% for input_num in range(food_rows) %}
+        <tr>
+          <td> 
+          <!-- Food name input -->
+          <input name={{ "food_" + input_num|string }} list="foods" placeholder="Insert food name">
+          <datalist id="foods">
+            {% for food_name in food_list %}
+              <option value={{ food_name }}>
+            {% endfor %}
+          </datalist>  
+          <td>
+          
+          <td>
+            <input type="number" name={{ "ounces_" + input_num|string }} value="0" min="0" autofocus> 
+          </td>
+          
+          <td># gained</td> 
+        </tr>
+        {% endfor %}
+      </table>
+      
+      <!-- Add and subtract food row buttons-->
+      <div class="divider">
+      
+        <!-- Subtract food row button -->
+        <div class="divider-size">
+          <button type="submit" name="action" value="SUB_FOOD_ROW">-1 row</button>
+        </div>
+      
+        <!-- Add food row button -->
+        <div class="divider-size">
+          <button type="submit" name="action" value="ADD_FOOD_ROW">+1 row</button>
+        </div>
+      </div>
+      
+      <!-- Exit and Update info buttons -->
       <div class="divider">
       
         <!-- Exit button -->
@@ -40,7 +83,7 @@ The dashboard of CalPal.
       
         <!-- Update info button -->
         <div class="divider-size">
-          <button type="submit" name="action" value="UPDATE INFO">Update info</button>
+          <button type="submit" name="action" value="UPDATE INFO">User info</button>
         </div>
       </div>
     </form>
