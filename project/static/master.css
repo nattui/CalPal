@@ -3,7 +3,7 @@
  * CalPal: A calorie tracking app.
  * Written by Nhat Nguyen and Albert Ong.
  * CMPE 131
- * Revision: 17.11.2018
+ * Revision: 24.11.2018
  * 
  * master.css
  * The master stylesheet. Used in base.html 
@@ -172,6 +172,8 @@ form input[type="email"],
 form input[type="number"], 
 form input[type="password"], 
 form input[type="text"], 
+form datalist,
+form input,
 form select, 
 form select[type="gender"] {
   border: 1px solid #f0f0f0;
