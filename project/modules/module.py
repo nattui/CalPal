@@ -1,123 +1,93 @@
-# Python module checks if the pass user information matches with the database
+#!/usr/bin/python3
+"""
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 20.11.2018
 
-# Import pandas
-import pandas as pd
+module.py
+A Python module for extraneous functions and variables.
+"""
 
-# Convert DataFrame column to list
-def convert(df_column):
-  list = []
-  for element in df_column:
-    list.append(element)
-  return list
-
-# Checks if the email exist in the database
-def checkEmail(email):
-  if email in list_email:
-    return(True)
-  else:
-    return(False)
-
-# Checks if the email match the password
-def checkPassword(email, password):
-  if password == dict_email_password[email]:
-    return(True)
-  else:
-    return(False)
-
-# Checks form information with the database
-def checkLogin(email, password):
-  if checkEmail(email):
-    return(checkPassword(email, password))
-  else:
-    return(False)
-
-# Create users: If email is unique, add user to the database
-def userCreation(fname, lname, email, password):
-  if checkEmail(email) == True:
-    return False
-  else:
-    list_fname.append(fname)
-    list_lname.append(lname)
-    list_email.append(email)
-    list_password.append(password)
-
-    # Create a Pandas dataframe from the data.
-    df = pd.DataFrame({'First Name': list_fname, 'Last Name': list_lname,
-                      'Email': list_email, 'Password': list_password})
-
-    # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter('../../database/database.xlsx', engine='xlsxwriter')
-
-    # Convert the dataframe to an XlsxWriter Excel object.
-    df.to_excel(writer, sheet_name='Sheet1')
-
-    # Close the Pandas Excel writer and output the Excel file.
-    writer.save()
-
-    dict_email_password = {}
-    for i in range(len(list_email)):
-      dict_email_password[list_email[i]] = list_password[i]
-
-    return True
+from calendar import month_name
 
 
-def getDatabase():
-  list = []
-  list.append(list_fname)
-  list.append(list_lname)
-  list.append(list_email)
-  list.append(list_password)
-  return(list)
+def monthNameToNumber(month_name):
+  """
+  Takes the name of a month and returns its corresponding number.
+  """
+  
+  # A dictionary that converts a month name to its 
+  # corresponding number. 
+  month_name_to_number = \
+    {"January"   : 1,
+     "February"  : 2, 
+     "March"     : 3,
+     "April"     : 4, 
+     "May"       : 5,
+     "June"      : 6, 
+     "July"      : 7,
+     "August"    : 8, 
+     "September" : 9,
+     "October"   : 10, 
+     "November"  : 11,  
+     "December"  : 12, }
+     
+  return month_name_to_number[month_name]
 
-# Create a Pandas dataframe from the excel file
-df = pd.read_excel('../../database/database.xlsx', sheet_name='Sheet1')
 
-# Save columns as list
-list_fname = convert(df['First Name'])
-list_lname = convert(df['Last Name'])
-list_email = convert(df['Email'])
-list_password = convert(df['Password'])
+def monthNumberToName(month_number):
+  """
+  Takes a number between 1 and 12, represented as a string, 
+  and returns the corresponing month name. 
+  """
+  month_index = int(month_number)
+  return month_name[month_index]
+  
 
-# Create a dictionary (KEY email: VALUE password) for user information
-dict_email_password = {}
-for i in range(len(list_email)):
-  dict_email_password[list_email[i]] = list_password[i]
+def mergeHeight(feet, inches):
+  """
+  Takes two integer values, feet and inches, and calculates
+  the total height in inches.
+  """
+  return (feet * 12) + inches
 
 
-if __name__ == '__main__':
-  print()
-  print()
+def splitHeight(total_height):
+  """
+  Takes a single integer value, the total height in inches, and
+  returns a tuple of integers representing the total height
+  in terms of feet and inches. 
+  
+  Example: 
+    splitHeight(68) = (5, 8)
+  """
+  feet   = total_height // 12
+  inches = total_height % 12
+  
+  return (feet, inches)
+  
 
-  fname = 'Jasmine'
-  lname = 'Mai'
-  email = 'jasmine@gmail.com'
-  password = 'Cat2'
+#=======================================================================
 
-  for i in range(10001,1000001):
-    fname = str(i)
-    lname = str(i)
-    email = str(i) + '@gmail.com'
-    password = str(i)
-    print(i)
-    list_fname.append(fname)
-    list_lname.append(lname)
-    list_email.append(email)
-    list_password.append(password)
-    # userCreation(fname, lname, email, password)
+if __name__ == "__main__":
+  
+  # The total height in inches. 
+  total_height = 68
+  print("total_height = ", total_height, "inches\n")
+  
+  # Splits the total height into feet and inches. 
+  split_height = splitHeight(total_height)
+  feet = split_height[0]
+  inches = split_height[1]
+  
+  # Prints the total height represented in feet and inches. 
+  print("splitHeight(total_height) = ", feet, "feet", inches, "inches")
+  
+  # Merges the feet and inches into inches.
+  # This values will be the same as total_height. 
+  merged_height = mergeHeight(feet, inches)
+  print("mergeHeight(feet, inches) = ", merged_height, "inches")
 
-  # Create a Pandas dataframe from the data.
-  df = pd.DataFrame({'First Name': list_fname, 'Last Name': list_lname,
-                      'Email': list_email, 'Password': list_password})
 
-  # Create a Pandas Excel writer using XlsxWriter as the engine.
-  writer = pd.ExcelWriter(
-      '../../database/database.xlsx', engine='xlsxwriter')
 
-  # Convert the dataframe to an XlsxWriter Excel object.
-  df.to_excel(writer, sheet_name='Sheet1')
-
-  # Close the Pandas Excel writer and output the Excel file.
-  writer.save()
-  # print("AFTER:", list_email)
-
-  print("DONE")

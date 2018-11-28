@@ -3,7 +3,7 @@
 @import 'reset';
 
 $background-color: #f8f8f8;
-$accent-color: #FF882B;
+$accent-color: #14aaf5;
 // $form-margin: 10%;
 
 // CSS Layout debugging
@@ -186,17 +186,6 @@ form {
   span {
     float: right;
     color: #FF5555;
-  }
-
-  // Name input fields
-  .name {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .name-size {
-    width: 46%;
   }
 
 }

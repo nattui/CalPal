@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Last Revised by Nhat Nguyen: 27.11.2018 
+Last Revised by Nhat Nguyen: 24.27.2018 
 
 This is where the python flask code occupies
 TODO: Finish the dashboard page
@@ -12,25 +12,9 @@ TODO: Finish the dashboard page
 from calendar import month_name
 from datetime import datetime
 
-from flask import (Flask, 
-                   render_template, 
-                   redirect, 
-                   url_for, 
-                   request, 
-                   Blueprint, 
-                   session)
-                   
-from modules.conversion import (monthNameToNumber,
-                            monthNumberToName,
-                            mergeHeight, 
-                            splitHeight)
-                            
-from modules.reader import (checkLogin, 
-                            checkEmail, 
-                            getUserDatabase, 
-                            getUserData,
-                            createUser, 
-                            writeNewUserData)
+from flask import *
+from modules.conversion import *
+from modules.reader import *
 
 from modules.FoodReader import FoodReader
 from modules.ExerciseReader import ExerciseReader
@@ -40,16 +24,17 @@ app.config["SECRET_KEY"] = "secret_key"
 
 main = Blueprint("main", __name__)
 
-
 # Redirects to the login page
 @main.route("/")
 def index():
+    session["calorie_list"] = []
     return redirect(url_for('main.login'))
 
 
 # User login page
 @main.route("/login")
 def login():
+    session["calorie_list"] = []
     return render_template("login.html")
 
 
@@ -115,7 +100,6 @@ def signup_page_1_redirect():
   # first name, last name, email, and password. 
   for var_name in ("fname", "lname", "email", "password"):
     session[var_name] = request.form[var_name]
-   
     
   # Redirects to the second signup page if the inputted email is
   # not already in the database. 
@@ -227,6 +211,8 @@ def dashboard():
     
     # Formats the current date into a sentence. 
     formatted_date = " ".join(["Today is", current_month, current_day + ",", current_year + "."])
+
+    session["foratted_date"] = formatted_date
     
     # Retrieves the list of exercises and foods.
     food_obj = FoodReader()
@@ -249,6 +235,42 @@ def dashboard():
     
     # Redirects to the login page otherwise. 
     return redirect(url_for("main.login"))
+
+
+# Reloads 
+@main.route("/dashboard", methods=["GET", "POST"])
+def dashboard_refresh():
+
+    food = request.form["food"]
+    ounce = request.form["ounce"]
+
+    calorie_list = session["calorie_list"]
+    count_calorie = 0
+
+    calories = FoodReader().getCalories(food, ounce)
+    if (calories > -1):
+        calorie_list.append([food, calories])
+        session["calorie_list"] = calorie_list
+        
+    for calories in calorie_list:
+        count_calorie = count_calorie + int(calories[1])
+
+    print(count_calorie)
+
+    # Retrieves the list of exercises and foods.
+    food_list = FoodReader().food_column
+    exercise_list = ExerciseReader().exercise_column
+
+    return render_template("dashboard.html", 
+                        fname          = session["fname"],
+                        lname          = session["lname"], 
+                        formatted_date = session["foratted_date"],
+                        food_list      = food_list, 
+                        exercise_list  = exercise_list,
+                        exercise_rows  = session["exercise_rows"], 
+                        food_rows      = session["food_rows"], 
+                        calorie_list   = session["calorie_list"],
+                        total_calories = count_calorie)
 
 
 # Controls the buttons for the dashboard page. 
@@ -407,6 +429,5 @@ app.register_blueprint(main)
 
 if __name__ == "__main__":
     app.run(debug=True)
-    app.run()
 
 

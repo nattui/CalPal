@@ -1,3 +1,42 @@
 .dashboard {
   margin-bottom: 150px; 
 }
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#rectangle-box {
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#rectangle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 8% 0px 8%;
+  margin-bottom: 5px;
+  background: #ff882b;
+  width: 464px;
+  height: 40px;
+}
+
+#rectangle p {
+  color:white;
+  font-weight: bolder;
+}
+
+#rectangle span {
+  color: red;
+  cursor: pointer;
+  position: relative;
+  right: 15px;
+  /* padding: 0px 8% 0px 0px; */
+}

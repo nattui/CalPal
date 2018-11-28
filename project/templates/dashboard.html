@@ -1,4 +1,3 @@
-
 <!--
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
@@ -28,25 +27,44 @@ The dashboard of CalPal.
       <p><h2>Welcome {{fname}} {{lname}}!</h2></p>
       <h2>{{formatted_date}}</h2>
 
+      {% if total_calories is defined %}
+        <h1>Total Calories: {{ total_calories }}</h1>
+      {% endif %}
+
       <!-- Food Searching -->
-      <div class="dropdown">
-        <p>Food Selection</p>
-        <input type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()">
-        <div id="myDropdown" class="dropdown-content">
-          {% for food_name in food_list %}
-          <a onclick="f('{{ food_name }}')">{{ food_name }}</a>
-          {% endfor %}
+      <form method="POST" action="{{ url_for('main.dashboard_refresh') }}">
+
+        <div class="dropdown">
+          <p>Food Selection</p>
+          <input type="text" name="food" placeholder="Search" id="myInput" onkeyup="filterFunction()" required>
+          <div id="myDropdown" class="dropdown-content">
+            {% for food_name in food_list %}
+            <a onclick="f('{{ food_name }}')">{{ food_name }}</a>
+            {% endfor %}
+          </div>
+          <p>How many ounces?</p>
+          <input type="number" name="ounce" placeholder="Ounce" id="ounce" required>
         </div>
-        <p>How many ounces?</p>
-        <input type="text" placeholder="Ounce" id="ounce">
+
+          <button type="submit" name="action" value="SUBMIT">Submit</button>
+      </form>
+
+      <div id="rectangle-box">
+        {% for calories in calorie_list %}
+          <div id="rectangle">
+            <!-- <p><span onclick="fn()">X</span>{{ calories[0] }}</p> -->
+            <p>{{ calories[0] }}</p>
+            <p>{{ calories[1] }} {{ count }}</p>
+          </div>
+        {% endfor %}
       </div>
+
+
     
     <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
       
       <!-- Exit and Update info buttons -->
       <div class="divider">
-            
-        <button type="submit" name="action" value="SUBMIT">Submit</button>
 
         <!-- Exit button -->
         <div class="divider-size">
@@ -63,6 +81,11 @@ The dashboard of CalPal.
   </div>
 
   <script src="../static/fitler.js"></script>
+  <script>
+    function fn() {
+      console.log("hi");
+    }
+  </script>
 </div>
 
 {% endblock %}

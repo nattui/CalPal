@@ -37,9 +37,32 @@ class FoodReader(DatabaseReader):
             
         return database_path
 
+    def getCalories(self, food, ounces):
+        ounces = int(ounces)
+        try:
+            food_index = self.food_column.index(food)
+            calories = self.calorie_column[food_index]
+            cal_per_oz = ounces * calories
+            print(int(cal_per_oz))
+            return (int(cal_per_oz))
+        except:
+            return -1
+
 
 if __name__ == "__main__":
     food_obj = FoodReader()
 
     for food_name in food_obj.food_column:
       print(food_name)
+
+    print()
+    print(food_obj.food_column[0])
+
+    num = food_obj.getCalories("Chapatis", 100)
+    print(num)
+
+
+    if (num < -1):
+        print("is dig")
+    else:
+        print("not")
