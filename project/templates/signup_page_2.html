@@ -1,0 +1,167 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+
+Revision: 17.11.2018
+-->
+
+<!-- Shows signup form -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main">
+
+  <!-- Form container -->
+  <div class="form-container">
+    <div class="form-wrapper">
+
+      <div class="center">
+        <div class="form-header">
+          <a href="{{ url_for('main.login') }}">
+            <img class="CalPal-logo"  src="../static/CalPal_Let's_get_to_know_you!.png" alt="Let's get to know you!" width="450">
+          </a>
+        </div>
+      </div>
+
+      <!-- Form method="POST" -->
+      <form method="POST" action="{{ url_for('main.signup_page_2_buttons') }}">
+        
+        <!-- Gender -->
+        <div class="input-label">
+          <label>Gender</label>
+          <span>•</span>
+        </div>
+        <select name="gender" value="Male">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+ 
+        <!-- Birthday -->
+        <div class="divider">
+        
+          <!-- Birth month -->
+          <div class="birthday-size">
+            <div class="input-label">
+              <label>Birthday</label>
+              <span>•</span>
+            </div>
+            <select name="birth-month" value="January">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+
+          <!-- Birth day -->
+          <div class="birthday-size">
+            <div class="input-label">
+              <span>•</span>
+            </div>
+            <input type="number" name="birth-day" value="1" min="1" max="31" autofocus> 
+          </div>
+          
+          <!-- Birth year -->
+          <div class="birthday-size">
+            <div class="input-label">
+              <span>•</span>
+            </div>
+            <input type="number" name="birth-year" value="2000"  min="1900" max="2050" autofocus> 
+          </div>
+        </div>
+
+  
+        <!-- Height -->
+        <div class="divider">
+        
+          <!-- Feet -->
+          <div class="divider-size">
+            <div class="height-input-label">
+              <label>Height</label>
+              <span>•</span>
+            </div>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-feet" value="0" min="0" max="99">
+            </label>
+            
+            <label class="input-details-text">ft</label>
+          </div>
+
+          <!-- Inches -->
+          <div class="divider-size">
+            <div class="height-input-label">
+              <span>•</span>
+            </div>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-inches" value="0" min="0" max="12" autofocus>
+            </label>
+            
+            <label class="input-details-text">in</label>
+          </div>
+        </div>
+
+        
+        <!-- Weight -->
+        <div class="weight-calorie-input-label">
+          <label>Weight</label>
+          <span>•</span>
+        </div>
+        
+        <label class="shortened-width">
+          <input type="number" name="weight" value="0" min="0" max="9999" autofocus>
+        </label>
+        
+        <label class="input-details-text">lbs</label>
+        <br><br>
+        
+        
+        <!-- Calorie goal -->
+        <div class="weight-calorie-input-label">
+          <label>Calorie Goal</label>
+          <span>•</span>
+        </div>
+        
+        <label class="shortened-width">
+          <input type="number" name="calorie-goal" value="0"  min="0" max="9999">
+        </label>
+        <label class="input-details-text">calories per day</label>
+
+        
+        <!-- Back and Sign Up buttons -->
+        <div class="divider">
+        
+          <!-- Back button --> 
+          <div class="divider-size">
+            <button type="submit" name="action" value="BACK">Back</button>
+          </div>
+        
+            <!-- Sign Up button -->
+          <div class="divider-size">
+            <button type="submit" name="action" value="SIGN UP">Sign up</button>
+          </div>
+        </div>
+        
+        
+      </form>
+      
+      <p>Have an account? <a href="{{ url_for('main.login') }}">Sign in</a></p>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

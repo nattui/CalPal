@@ -1,3 +1,11 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 20.11.2018
+-->
+
 <!-- Shows login form -->
 {% extends "base.html" %}
 {% block content %}
@@ -10,9 +18,9 @@
   
         <div class="center">
           <div class="form-header">
-            <h1><a href="{{ url_for("main.login") }}">CalPal</a></h1>
-            <h2>Managing Calories for Health Conscious People</h2>
-            <p>- Log in -</p>
+            <a href="{{ url_for('main.login') }}">
+              <img class="CalPal-logo" src="../static/CalPal_logo_opaque.png" alt="The CalPal logo" width="450">
+            </a>
           </div>
         </div>
         
@@ -23,10 +31,17 @@
         </div>
         {% endif %}
 
-        <!-- Error message appears -->
+        <!-- Login failure message appears -->
         {% if loginFailure is defined %}
         <div class="failure">
           <p>Incorrect email or password combination.</p>
+        </div>
+        {% endif %}
+
+        <!-- Unused email message appears -->
+        {% if unusedEmail is defined %}
+        <div class="failure">
+          <p>That email is not currently registered.</p>
         </div>
         {% endif %}
 
@@ -46,13 +61,13 @@
             <span>•</span>
           </div>
           <input type="password" name="password" placeholder="Password" spellcheck="false" required>
-
+          
           <!-- Submit -->
-          <button type="submit">Log In</button>
+          <button type="submit" name="action" value="SIGN IN">Sign In</button>
 
         </form>
 
-        <p>Don’t have an account? <a href="{{ url_for("main.signup") }}">Sign up</a></p>
+        <p>Don’t have an account? <a href="{{ url_for('main.signup_page_1') }}">Sign up</a></p>
   
       </div>
     </div>

@@ -1,0 +1,200 @@
+
+<!--
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 20.11.2018
+
+A page that allows the user to update their personal info. 
+-->
+
+<!-- Shows login form -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main">
+
+  <!-- Form container -->
+  <div class="form-container">
+    <div class="form-wrapper">
+    
+      <div class="center">
+        <a href="{{ url_for('main.dashboard') }}">
+          <img src="../static/CalPal_User_info.png" alt="User info" width="350">
+        </a>
+      </div>
+      
+      <!-- Update successful message -->
+      {% if updateSuccess %}
+      <div class="success">
+        <p>Your info has been updated!</p>
+      </div>
+      {% endif %}
+      
+      <!-- Email already used message -->
+      {% if usedEmail %}
+      <div class="failure">
+        <p>That email has already been used.</p>
+      </div>
+      {% endif %}
+      
+  
+      <form method="POST" action="{{ url_for('main.update_user_info_buttons') }}">
+        
+        <!-- First and Last Name inputs -->
+        <div class="divider">
+        <!-- First Name -->
+          <div class="divider-size">
+            <div class="input-label">
+              <label>First Name</label>
+            </div>
+            <input type="text" name="fname" value="{{ fname }}" spellcheck="false" autofocus required>
+          </div>
+
+        <!-- Last Name -->
+          <div class="divider-size">
+            <div class="input-label">
+              <label>Last Name</label>
+            </div>
+            <input type="text" name="lname" value="{{ lname }}" spellcheck="false" required>
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="input-label">
+          <label>Email Address</label>
+        </div>
+        <input type="email" name="email" value="{{ email }}" spellcheck="false" required>
+
+        <!-- Password -->
+        <div class="input-label">
+          <label>Password</label>
+        </div>
+        <input type="password" name="password" value="{{ password }}" spellcheck="false" required>
+        
+        <!-- Gender -->
+        <div class="input-label">
+          <label>Gender</label>
+        </div>
+        <select name="gender">
+          <option value="Male"   {% if gender == "Male" %} selected="selected" {% endif %}> Male </option>
+          <option value="Female" {% if gender == "Female" %} selected="selected" {% endif %}> Female </option>
+          <option value="Other"  {% if gender == "Other" %} selected="selected" {% endif %}> Other </option>
+        </select>
+        
+        <!-- Birthday -->
+        <div class="divider">
+        
+          <!-- Birth month -->
+          <div class="birthday-size">
+            <div class="input-label">
+              <label>Birthday</label>
+            </div>
+             
+            <select name="birth-month" value="January">
+              <option value="January"   {% if birth_month == 1 %} selected="selected" {% endif %}>January</option>
+              <option value="February"  {% if birth_month == 2 %} selected="selected" {% endif %}>February</option>
+              <option value="March"     {% if birth_month == 3 %} selected="selected" {% endif %}>March</option>
+              <option value="April"     {% if birth_month == 4 %} selected="selected" {% endif %}>April</option>
+              <option value="May"       {% if birth_month == 5 %} selected="selected" {% endif %}>May</option>
+              <option value="June"      {% if birth_month == 6 %} selected="selected" {% endif %}>June</option>
+              <option value="July"      {% if birth_month == 7 %} selected="selected" {% endif %}>July</option>
+              <option value="August"    {% if birth_month == 8 %} selected="selected" {% endif %}>August</option>
+              <option value="September" {% if birth_month == 9 %} selected="selected" {% endif %}>September</option>
+              <option value="October"   {% if birth_month == 10 %} selected="selected" {% endif %}>October</option>
+              <option value="November"  {% if birth_month == 11 %} selected="selected" {% endif %}>November</option>
+              <option value="December"  {% if birth_month == 12 %} selected="selected" {% endif %}>December</option>
+            </select>
+          </div>
+
+          <!-- Birth day -->
+          <div class="birthday-size">
+            <div class="input-label">
+            </div>
+            <input type="number" name="birth-day" value="{{ birth_day }}" min="1" max="31" autofocus> 
+          </div>
+          
+          <!-- Birth year -->
+          <div class="birthday-size">
+            <div class="input-label">
+            </div>
+            <input type="number" name="birth-year" value="{{ birth_year }}"  min="1900" max="2050" autofocus> 
+          </div>
+        </div>
+
+  
+        <!-- Height -->
+        <div class="divider">
+        
+          <!-- Feet -->
+          <div class="divider-size">
+            <div class="height-input-label">
+              <label>Height</label>
+            </div>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-feet" value="{{ height_feet }}" min="0" max="99">
+            </label>
+            
+            <label class="input-details-text">ft</label>
+          </div>
+
+          <!-- Inches -->
+          <div class="divider-size">
+            <div class="height-input-label">
+            </div>
+            
+            <label class="height-input-width">
+              <input type="number" name="height-inches" value="{{ height_inches }}" min="0" max="12" autofocus>
+            </label>
+            
+            <label class="input-details-text">in</label>
+          </div>
+        </div>
+
+        
+        <!-- Weight -->
+        <div class="weight-calorie-input-label">
+          <label>Weight</label>
+        </div>
+        
+        <label class="shortened-width">
+          <input type="number" name="weight" value="{{ weight }}" min="0" max="9999" autofocus>
+        </label>
+        
+        <label class="input-details-text">lbs</label>
+        <br><br>
+        
+        
+        <!-- Calorie goal -->
+        <div class="weight-calorie-input-label">
+          <label>Calorie Goal</label>
+        </div>
+        
+        <label class="shortened-width">
+          <input type="number" name="calorie-goal" value="{{ calorie_goal }}"  min="0" max="9999">
+        </label>
+        <label class="input-details-text">calories per day</label>
+        
+        
+        <!-- Back and Update buttons -->
+        <div class="divider">
+            
+          <!-- Back button -->
+          <div class="divider-size">
+            <button type="submit" name="action" value="BACK">Back</button>
+          </div>
+          
+          <!-- Update button -->
+          <div class="divider-size">
+            <button type="submit" name="action" value="UPDATE">Update</button>
+          </div>
+        </div>
+        
+      </form>
+      
+    </div>
+  </div>
+</div>
+      
+{% endblock %}
