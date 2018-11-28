@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Last Revised by Nhat Nguyen: 24.27.2018 
+Last Revised by Nhat Nguyen: 27.11.2018 
 
 This is where the python flask code occupies
 TODO: Finish the dashboard page
