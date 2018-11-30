@@ -49,6 +49,7 @@ The dashboard of CalPal.
           <button type="submit" name="action" value="SUBMIT">Submit</button>
       </form>
 
+      {% if calorie_list|length > 0 %}
       <div id="rectangle-box">
         {% for calories in calorie_list %}
           <div id="rectangle">
@@ -58,25 +59,27 @@ The dashboard of CalPal.
           </div>
         {% endfor %}
       </div>
+      {% endif %}
+
 
 
     
-    <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+    <!-- <form method="POST" action="{{ url_for('main.dashboard_buttons') }}"> -->
       
       <!-- Exit and Update info buttons -->
-      <div class="divider">
+      <!-- <div class="divider"> -->
 
         <!-- Exit button -->
-        <div class="divider-size">
-            <button type="submit" name="action" value="EXIT">Exit</button>
-        </div>
+        <!-- <div class="divider-size"> -->
+            <!-- <button type="submit" name="action" value="EXIT">Exit</button> -->
+        <!-- </div> -->
       
         <!-- Update info button -->
-        <div class="divider-size">
-          <button type="submit" name="action" value="UPDATE INFO">User info</button>
-        </div>
-      </div>
-    </form>
+        <!-- <div class="divider-size"> -->
+          <!-- <button type="submit" name="action" value="UPDATE INFO">User info</button> -->
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </form> -->
     
   </div>
 

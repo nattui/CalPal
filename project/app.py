@@ -196,10 +196,10 @@ def dashboard():
   # Attempts to retrieve the first name, last name, email, and 
   # password of the user. 
   try:
-    fname = session["fname"]
-    lname = session["lname"]
-    email = session['email']
-    password = session['password']
+    # fname = session["fname"]
+    # lname = session["lname"]
+    # email = session['email']
+    # password = session['password']
     
     # Retrieves the current date. 
     current_date = datetime.today()
@@ -222,10 +222,10 @@ def dashboard():
     exercise_list = exercise_obj.exercise_column
     
     return render_template("dashboard.html", 
-                           email          = email, 
-                           password       = password, 
-                           fname          = fname,
-                           lname          = lname, 
+                        #    email          = email, 
+                        #    password       = password, 
+                           fname          = session["fname"],
+                           lname          = session["lname"], 
                            formatted_date = formatted_date, 
                            exercise_list  = exercise_list,
                            food_list      = food_list, 
