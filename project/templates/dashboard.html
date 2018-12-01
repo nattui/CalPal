@@ -1,9 +1,8 @@
-
 <!--
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 24.11.2018
+Revision: 30.11.2018
 
 The dashboard of CalPal. 
 -->
@@ -12,7 +11,7 @@ The dashboard of CalPal.
 {% extends "base.html" %}
 {% block content %}
 
-<div class="main">
+<div class="main dashboard">
 
   <!-- Form container -->
   <div class="form-container">
@@ -25,71 +24,69 @@ The dashboard of CalPal.
       </div>
       
       <!-- Welcome message -->
-      <p><h2>Welcome {{fname}} {{lname}}!</h2</p>
+      <p><h2>Welcome {{fname}} {{lname}}!</h2></p>
       <h2>{{formatted_date}}</h2>
+
+      {% if total_calories is defined %}
+        <h1>Calories gained: {{ total_calories }}</h1>
+      {% endif %}
+
+      <!-- Food Searching -->
+      <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+
+        <div class="dropdown">
+          <p>Food Selection</p>
+          <input type="text" name="food" placeholder="Search" id="myInput" onkeyup="filterFunction()" required>
+          <div id="myDropdown" class="dropdown-content">
+            {% for food_name in food_list %}
+            <a onclick="f('{{ food_name }}')">{{ food_name }}</a>
+            {% endfor %}
+          </div>
+          <p>How many ounces?</p>
+          <input type="number" name="ounce" placeholder="Ounce" id="ounce" step="0.1" min="0" required>
+        </div>
+
+          <button type="submit" name="action" value="SUBMIT">Submit</button>
+      </form>
+
+      {% if calorie_list|length > 0 %}
+      <div id="rectangle-box">
+        {% for calories in calorie_list %}
+          <div id="rectangle">
+            <!-- <p><span onclick="fn()">X</span>{{ calories[0] }}</p> -->
+            <p>{{ calories[0] }}</p>
+            <p>{{ calories[1]|int }} {{ count }}</p>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
     
     <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
       
-      <table style="width: 100%">
-        <tr>
-          <th>Food</th>
-          <th>Oz</th>
-          <th>Calories gained</th> 
-        </tr>
-        
-        <!-- Generates multiple rows -->
-        {% for input_num in range(food_rows) %}
-        <tr>
-          <td> 
-          <!-- Food name input -->
-          <input name={{ "food_" + input_num|string }} list="foods" placeholder="Insert food name">
-          <datalist id="foods">
-            {% for food_name in food_list %}
-              <option value={{ food_name }}>
-            {% endfor %}
-          </datalist>  
-          <td>
-          
-          <td>
-            <input type="number" name={{ "ounces_" + input_num|string }} value="0" min="0" autofocus> 
-          </td>
-          
-          <td># gained</td> 
-        </tr>
-        {% endfor %}
-      </table>
-      
-      <!-- Add and subtract food row buttons-->
-      <div class="divider">
-      
-        <!-- Subtract food row button -->
-        <div class="divider-size">
-          <button type="submit" name="action" value="SUB_FOOD_ROW">-1 row</button>
-        </div>
-      
-        <!-- Add food row button -->
-        <div class="divider-size">
-          <button type="submit" name="action" value="ADD_FOOD_ROW">+1 row</button>
-        </div>
-      </div>
-      
       <!-- Exit and Update info buttons -->
       <div class="divider">
-      
+
         <!-- Exit button -->
-        <div class="divider-size">
-            <button type="submit" name="action" value="EXIT">Exit</button>
+        <div class="divider-size"> 
+            <button type="submit" name="action" value="EXIT">Exit</button> 
         </div>
       
         <!-- Update info button -->
-        <div class="divider-size">
-          <button type="submit" name="action" value="UPDATE INFO">User info</button>
-        </div>
-      </div>
+        <div class="divider-size"> 
+          <button type="submit" name="action" value="UPDATE INFO">User info</button> 
+        </div> 
+      </div> 
     </form>
     
   </div>
 
+  <script src="../static/fitler.js"></script>
+  <script>
+    function fn() {
+      console.log("hi");
+    }
+  </script>
 </div>
 
 {% endblock %}
