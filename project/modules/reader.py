@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 24.11.2018
+Last Revised by Nhat Nguyen: 30.11.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -14,7 +14,6 @@ TODO: Optimize the reading and writing database
 
 # Import pandas
 import pandas as pd
-import timeit
 
 
 def convert(df_column):
@@ -203,25 +202,6 @@ def getDatabase(database_path, columns):
   return database
 
 
-def getExerciseDatabase():
-  """
-  Returns the entire exercise database.
-  """
-  exercise_database_columns = ("Exercise Name", 
-                               "Calories per minute")
-  return getDatabase(getExerciseDatabasePath(), exercise_database_columns)
-  
-
-def getFoodDatabase():
-  """
-  Returns the entire food database.
-  """
-  food_database_columns = ("Category", 
-                           "Food name", 
-                           "Calories per oz")
-  return getDatabase(getFoodDatabasePath(), food_database_columns)
-
-
 def getUserDatabase():
   """
   Returns the entire user database.
@@ -279,32 +259,6 @@ def writeToUserDatabase(new_database):
 
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
-
-
-def getExerciseDatabasePath():
-  """
-  Returns the path of the exercise database depending on whether or not this
-  file is being run on reader.py or app.py. 
-  """
-  if __name__ == "__main__":
-    database_path = "../../database/exercise_database.xlsx"
-  else:
-    database_path = "../database/exercise_database.xlsx"
-    
-  return database_path
-  
-
-def getFoodDatabasePath():
-  """
-  Returns the path of the food database depending on whether or not this
-  file is being run on reader.py or app.py. 
-  """
-  if __name__ == "__main__":
-    database_path = "../../database/food_database.xlsx"
-  else:
-    database_path = "../database/food_database.xlsx"
-    
-  return database_path
   
 
 def getUserDatabasePath():
@@ -356,8 +310,6 @@ if __name__ == "__main__":
     birth_month = 12
     birth_year = 1998
     height = 70
-
-    for item in getFoodDatabase()[1]:
-      print(item)
     
+    print(fname, lname, email)
     
