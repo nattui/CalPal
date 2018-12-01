@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 30.11.2018
+Revision: 01.12.2018
 
 ExerciseReader.py
 Reads data from exercise_database.xlsx
@@ -38,10 +38,10 @@ def getExerciseDatabasePath():
   return database_path
 
 
-def getExerciseCalories(exercise_name, minutes):
+def getExerciseCalories(exercise_name, minutes, weight):
   """
-  Calculates the number of calories burned given an exercise name
-  and the number of minutes exercising. 
+  Calculates the number of calories burned given an exercise name, 
+  the number of minutes exercising, and the user's weight.
   """
   # Retrieves the exercise and calories per minute columns from
   # exercise_databast.xlsx
@@ -55,8 +55,8 @@ def getExerciseCalories(exercise_name, minutes):
   calories_per_minute = calorie_column[exercise_index]
   
   # Calculates the number of calories burned, which is the 
-  # # of minutes exercising * # of calories per minute
-  calories_burned = minutes * calories_per_minute
+  # # of minutes exercising * # of calories per minute * the user's weight
+  calories_burned = minutes * calories_per_minute * weight
   
   # Returns the number of calories burned. 
   return calories_burned
@@ -66,5 +66,4 @@ def getExerciseCalories(exercise_name, minutes):
 
 
 if __name__ == "__main__":
-    
-    print(getExerciseCalories("Tennis", 60))
+  pass
