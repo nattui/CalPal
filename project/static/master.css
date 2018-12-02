@@ -342,7 +342,7 @@ form .height-input-width {
 	background-color: #3e8e41;
 }
 
-#myDropdown {
+#myDropdownF, #myDropdown {
 	max-height: 200px;
 	width: 100%;
 	overflow-x: hidden;
@@ -360,7 +360,7 @@ form .height-input-width {
 	width: 400px;
 }
 
-#ounce {
+#ounce, #minute {
 	box-sizing: border-box;
 	font-size: 16px;
 	padding: 14px 20px 12px 20px;
