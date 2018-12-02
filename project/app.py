@@ -3,8 +3,9 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Last Revised by Nhat Nguyen: 24.27.2018 
+Last Revised by Nhat Nguyen: 30.11.2018 
 
+app.py
 This is where the python flask code occupies
 TODO: Finish the dashboard page
 """
@@ -15,9 +16,10 @@ from datetime import datetime
 from flask import *
 from modules.conversion import *
 from modules.reader import *
-
-from modules.FoodReader import FoodReader
-from modules.ExerciseReader import ExerciseReader
+from modules.FoodReader import (getFoodDatabase,
+                                getFoodCalories)
+from modules.ExerciseReader import (getExerciseDatabase,
+                                    getExerciseCalories)
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key"
@@ -27,14 +29,18 @@ main = Blueprint("main", __name__)
 # Redirects to the login page
 @main.route("/")
 def index():
-    session["calorie_list"] = []
+    session["calorie_food_list"] = []
+    session["calorie_exercise_list"] = []
+    session["count_exercise_calorie"] = 0
     return redirect(url_for('main.login'))
 
 
 # User login page
 @main.route("/login")
 def login():
-    session["calorie_list"] = []
+    session["calorie_food_list"] = []
+    session["calorie_exercise_list"] = []
+    session["count_exercise_calorie"] = 0
     return render_template("login.html")
 
 
@@ -58,7 +64,7 @@ def login_redirect():
     for var_index, var_name in enumerate(("fname", 
                                           "lname", 
                                           "email",
-                                          "password",
+                                          # "password",
                                           "gender", 
                                           "birth-day", 
                                           "birth-month", 
@@ -67,17 +73,13 @@ def login_redirect():
                                           "weight", 
                                           "calorie-goal")):
       session[var_name] = user_data[var_index]
-      
-    # Assigns the number for rows for exercise and food inputs.
-    # The default number is 3. 
-    session["exercise_rows"] = 3
-    session["food_rows"] = 3
     
     # If user information matches the information in the database, continue to application
     if checkLogin(session["email"], session["password"]):
-        return redirect(url_for('main.dashboard'))
+      
+      return redirect(url_for('main.dashboard'))
     else:
-        return render_template("login.html", loginFailure=True)
+      return render_template("login.html", loginFailure=True)
 
 
 # If the user is sucessfully created
@@ -195,82 +197,30 @@ def dashboard():
   
   # Attempts to retrieve the first name, last name, email, and 
   # password of the user. 
-  try:
-    # fname = session["fname"]
-    # lname = session["lname"]
-    # email = session['email']
-    # password = session['password']
-    
-    # Retrieves the current date. 
-    current_date = datetime.today()
-    
-    # Extracts the day, month, and year into strings. 
-    current_day =   str(current_date.day)
-    current_month = month_name[current_date.month]
-    current_year =  str(current_date.year)
-    
-    # Formats the current date into a sentence. 
-    formatted_date = " ".join(["Today is", current_month, current_day + ",", current_year + "."])
+  
+  # Retrieves the current date. 
+  current_date = datetime.today()
+  
+  # Extracts the day, month, and year into strings. 
+  current_day =   str(current_date.day)
+  current_month = month_name[current_date.month]
+  current_year =  str(current_date.year)
+  
+  # Formats the current date into a sentence. 
+  formatted_date = " ".join(["Today is", current_month, current_day + ",", current_year + "."])
 
-    session["foratted_date"] = formatted_date
-    
-    # Retrieves the list of exercises and foods.
-    food_obj = FoodReader()
-    exercise_obj = ExerciseReader()
-
-    food_list = food_obj.food_column
-    exercise_list = exercise_obj.exercise_column
-    
-    return render_template("dashboard.html", 
-                        #    email          = email, 
-                        #    password       = password, 
-                           fname          = session["fname"],
-                           lname          = session["lname"], 
-                           formatted_date = formatted_date, 
-                           exercise_list  = exercise_list,
-                           food_list      = food_list, 
-                           exercise_rows  = session["exercise_rows"], 
-                           food_rows      = session["food_rows"])
-  except:
-    
-    # Redirects to the login page otherwise. 
-    return redirect(url_for("main.login"))
-
-
-# Reloads 
-@main.route("/dashboard", methods=["GET", "POST"])
-def dashboard_refresh():
-
-    food = request.form["food"]
-    ounce = request.form["ounce"]
-
-    calorie_list = session["calorie_list"]
-    count_calorie = 0
-
-    calories = FoodReader().getCalories(food, ounce)
-    if (calories > -1):
-        calorie_list.append([food, calories])
-        session["calorie_list"] = calorie_list
-        
-    for calories in calorie_list:
-        count_calorie = count_calorie + int(calories[1])
-
-    print(count_calorie)
-
-    # Retrieves the list of exercises and foods.
-    food_list = FoodReader().food_column
-    exercise_list = ExerciseReader().exercise_column
-
-    return render_template("dashboard.html", 
-                        fname          = session["fname"],
-                        lname          = session["lname"], 
-                        formatted_date = session["foratted_date"],
-                        food_list      = food_list, 
-                        exercise_list  = exercise_list,
-                        exercise_rows  = session["exercise_rows"], 
-                        food_rows      = session["food_rows"], 
-                        calorie_list   = session["calorie_list"],
-                        total_calories = count_calorie)
+  session["foratted_date"] = formatted_date
+  
+  # Retrieves the list of exercises and foods.
+  food_list = getFoodDatabase()[1]
+  exercise_list = getExerciseDatabase()[0]
+  
+  return render_template("dashboard.html", 
+                         fname          = session["fname"],
+                         lname          = session["lname"], 
+                         formatted_date = formatted_date, 
+                         exercise_list  = exercise_list,
+                         food_list      = food_list)
 
 
 # Controls the buttons for the dashboard page. 
@@ -278,31 +228,11 @@ def dashboard_refresh():
 def dashboard_buttons():
   
   # Retrieves the name of the action. 
-  # This value will either be ADD_FOOD_ROW, SUB_FOOD_ROW, 
-  # EXIT, or UPDATE INFO. 
+  # This value will either be SUBMIT, EXIT, or UPDATE INFO. 
   action_name = request.form.get("action")
   
-  # If the add food row button was pressed... 
-  if action_name == "ADD_FOOD_ROW":
-    
-    # Increments the number of food rows.
-    session["food_rows"] += 1
-    
-    # Reloads the dashboard page.
-    return dashboard()
-  
-  # If the subtract food row button was pressed... 
-  elif action_name == "SUB_FOOD_ROW":
-    
-    # Decrements the number of food rows if there are more than 3 rows.
-    if session["food_rows"] > 3:
-      session["food_rows"] -= 1
-    
-    # Reloads the dashboard page.
-    return dashboard()
-  
   # If the update info button was pressed... 
-  elif action_name == "UPDATE INFO":
+  if action_name == "UPDATE INFO":
     
     # Redirects to the update user info page. 
     return redirect(url_for("main.update_user_info"))
@@ -315,6 +245,88 @@ def dashboard_buttons():
     
     # Redirects to the login page. 
     return redirect(url_for("main.login"))
+  
+  # If the sumbit button was pressed...
+  elif action_name == "SUBMIT_FOODS":
+    
+    # Retrieves the name of the food and the number of ounces consumed. 
+    food = request.form["food"]
+    ounce = request.form["ounce"]
+    
+    
+    calorie_food_list = session["calorie_food_list"]
+    count_food_calorie = 0
+    
+    # Calculated the number of calories gained. 
+    calories = getFoodCalories(food, float(ounce))
+    
+    if (calories >= 0):
+      calorie_food_list.append([food, calories])
+      session["calorie_food_list"] = calorie_food_list
+        
+    for calories in calorie_food_list:
+      count_food_calorie = count_food_calorie + int(calories[1])
+      session["count_food_calorie"] = count_food_calorie
+
+    print()
+    print(session["count_food_calorie"])
+    print(session["count_exercise_calorie"])
+
+    total_calories = session["count_food_calorie"] - session["count_exercise_calorie"]
+
+
+    # Retrieves the list of exercises and foods.
+    session["food_list"] = getFoodDatabase()[1]
+    session["exercise_list"] = getExerciseDatabase()[0]
+
+    return render_template("dashboard.html", 
+                          fname          = session["fname"],
+                          lname          = session["lname"], 
+                          formatted_date = session["foratted_date"],
+                          food_list      = session["food_list"], 
+                          exercise_list  = session["exercise_list"],
+                          calorie_food_list   = session["calorie_food_list"],
+                          calorie_exercise_list = session["calorie_exercise_list"],
+                          total_calories = int(total_calories))
+
+
+  # EXERCISE
+  elif action_name == "SUBMIT_EXERCISE":
+    exercise = request.form["exercise"]
+    minute = request.form["minute"]
+
+    calorie_exercise_list = session["calorie_exercise_list"]
+    count_exercise_calorie = 0
+
+    calories = getExerciseCalories(exercise, float(minute), session["weight"])
+    if (calories >= 0):
+      calorie_exercise_list.append([exercise, calories])
+      session["calorie_exercise_list"] = calorie_exercise_list
+
+    for calories in calorie_exercise_list:
+      count_exercise_calorie = count_exercise_calorie + int(calories[1])
+      session["count_exercise_calorie"] = count_exercise_calorie
+
+    total_calories = session["count_food_calorie"] - session["count_exercise_calorie"]
+
+    print()
+    print()
+    print("exercise:", exercise)
+    print("minute:", minute)
+    print("Calories:", calories)
+    print("calorie_exercise_list:", session["calorie_exercise_list"])
+    print("count_exercise_calorie:", session["count_exercise_calorie"])
+    print()
+
+    return render_template("dashboard.html", 
+                        fname          = session["fname"],
+                        lname          = session["lname"], 
+                        formatted_date = session["foratted_date"],
+                        food_list      = session["food_list"], 
+                        exercise_list  = session["exercise_list"],
+                        calorie_food_list = session["calorie_food_list"],
+                        calorie_exercise_list = session["calorie_exercise_list"],
+                        total_calories = int(total_calories))
 
 
 # The update user info page. 

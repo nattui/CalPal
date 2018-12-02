@@ -117,7 +117,7 @@ form {
 }
 
 .form-container {
-  margin-top: 150px;
+  margin-top: 4%;
 	border-radius: 5px;
 	background-color: #fba56730;
 	padding: 2.5% 0% 2.5% 0%;
@@ -342,7 +342,7 @@ form .height-input-width {
 	background-color: #3e8e41;
 }
 
-#myDropdown {
+#myDropdownF, #myDropdown {
 	max-height: 200px;
 	width: 100%;
 	overflow-x: hidden;
@@ -360,7 +360,7 @@ form .height-input-width {
 	width: 400px;
 }
 
-#ounce {
+#ounce, #minute {
 	box-sizing: border-box;
 	font-size: 16px;
 	padding: 14px 20px 12px 20px;

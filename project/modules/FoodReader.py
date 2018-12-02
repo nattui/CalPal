@@ -1,68 +1,70 @@
+#!/usr/bin/python3
 """
-Last Revised by Nhat Nguyen: 24.27.2018 
+CalPal: A calorie tracking app.
+Written by Nhat Nguyen and Albert Ong.
+CMPE 131
+Revision: 30.11.2018
+
+FoodReader.py
+Reads data from food_database.xlsx
 """
 
-# Relative imports
+# Imports from DatabaseReader depending on whether or not the function 
+# is being run from FoodReader.py or app.py
 if __name__ == "__main__":
-    from DatabaseReader import DatabaseReader
+    from DatabaseReader import getDatabase
 else:
-    from modules.DatabaseReader import DatabaseReader
+    from modules.DatabaseReader import getDatabase
 
-class FoodReader(DatabaseReader):
 
-    def __init__(self):
-        """
-        Constructor.
-        """
-        self.category_column = self.getFoodDatabase()[0]
-        self.food_column = self.getFoodDatabase()[1]
-        self.calorie_column = self.getFoodDatabase()[2]
+def getFoodDatabase():
+  """
+  Returns the entire food database.
+  """
+  food_database_columns = ("Category", "Food name", "Calories per oz")
+  return getDatabase(getFoodDatabasePath(), food_database_columns)
 
-    def getFoodDatabase(self):
-        """
-        Returns the entire food database.
-        """
-        food_database_columns = ("Category", "Food name", "Calories per oz")
-        return self.getDatabase(self.getFoodDatabasePath(), food_database_columns)
 
-    def getFoodDatabasePath(self):
-        """
-        Returns the path of the food database depending on whether or not this
-        file is being run on reader.py or app.py. 
-        """
-        if __name__ == "__main__":
-            database_path = "../../database/food_database.xlsx"
-        else:
-            database_path = "../database/food_database.xlsx"
-            
-        return database_path
+def getFoodDatabasePath():
+  """
+  Returns the path of the food database depending on whether or not \
+  this file is being run on reader.py or app.py. 
+  """
+  if __name__ == "__main__":
+      database_path = "../../database/food_database.xlsx"
+  else:
+      database_path = "../database/food_database.xlsx"
+      
+  return database_path
 
-    def getCalories(self, food, ounces):
-        ounces = int(ounces)
-        try:
-            food_index = self.food_column.index(food)
-            calories = self.calorie_column[food_index]
-            cal_per_oz = ounces * calories
-            print(int(cal_per_oz))
-            return (int(cal_per_oz))
-        except:
-            return -1
+
+def getFoodCalories(food, ounces):
+  """
+  Calclates the number of calories gained given a food name and 
+  the number of ounces consumed. 
+  """
+  
+  # Retrieves the food and calories per ounce columns from 
+  # food_database.xlsx 
+  food_column = getFoodDatabase()[1]
+  calorie_column = getFoodDatabase()[2]
+  
+  # Retrieves the index associated with the given food name.
+  food_index = food_column.index(food)
+  
+  # Retrieves the number of calories per ounce for the given food name.
+  calories_per_ounce = calorie_column[food_index]
+  
+  # Calculated the number of calories gained, which is the
+  # # of ounces consumed * # of calories per ounce
+  calories_gained = ounces * calories_per_ounce
+  
+  # Returns the # of calories gained. 
+  return calories_gained
+
+
+#=======================================================================
 
 
 if __name__ == "__main__":
-    food_obj = FoodReader()
-
-    for food_name in food_obj.food_column:
-      print(food_name)
-
-    print()
-    print(food_obj.food_column[0])
-
-    num = food_obj.getCalories("Chapatis", 100)
-    print(num)
-
-
-    if (num < -1):
-        print("is dig")
-    else:
-        print("not")
+    print(getFoodCalories("Bagel", 12.5))
