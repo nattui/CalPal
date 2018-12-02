@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Last Revised by Nhat Nguyen: 30.11.2018
+Last Revised by Nhat Nguyen: 24.27.2018
 
 reader.py
 A Python module checks if the pass user information 
@@ -311,5 +311,5 @@ if __name__ == "__main__":
     birth_year = 1998
     height = 70
     
-    print(fname, lname, email)
+    print(getUserData("jasmine@gmail.com"))
     

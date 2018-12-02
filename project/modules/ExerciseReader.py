@@ -4,7 +4,6 @@ CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
 Revision: 01.12.2018
-
 ExerciseReader.py
 Reads data from exercise_database.xlsx
 """
