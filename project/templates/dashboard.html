@@ -2,7 +2,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 30.11.2018
+Revision: 01.12.2018
 
 The dashboard of CalPal. 
 -->
@@ -14,7 +14,7 @@ The dashboard of CalPal.
 <div class="main dashboard">
 
   <!-- Form container -->
-  <div class="form-container">
+  <div class="form-container-dashboard">
     <div class="form-wrapper">
 
       <div class="center">
@@ -32,35 +32,70 @@ The dashboard of CalPal.
       {% endif %}
 
       <!-- Food Searching -->
-      <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
 
-        <div class="dropdown">
-          <p>Food Selection</p>
-          <input type="text" name="food" placeholder="Search" id="myInput" onkeyup="filterFunction()" required>
-          <div id="myDropdown" class="dropdown-content">
-            {% for food_name in food_list %}
-            <a onclick="f('{{ food_name }}')">{{ food_name }}</a>
+      <div id="sidebyside">
+        <div id="food">
+          <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+          
+            <div class="dropdown">
+              <p>Food Selection</p>
+              <input type="text" name="food" placeholder="Search" id="myFood" onkeyup="filterF()" min="0" required>
+              <div id="myDropdownF" class="dropdown-content">
+                {% for food_name in food_list %}
+                <a onclick="filterFood('{{ food_name }}')">{{ food_name }}</a>
+                {% endfor %}
+              </div>
+              <p>How many ounces?</p>
+              <input type="number" name="ounce" placeholder="Ounce" id="ounce" min="0" required>
+            </div>
+            <button class="dashboard-btn" type="submit" name="action" value="SUBMIT_FOODS">Submit</button>
+
+            {% if calorie_food_list|length > 0 %}
+            <div id="rectangle-box">
+              {% for food_calories in calorie_food_list %}
+              <div id="rectangle">
+                <p>{{ food_calories[0] }}</p>
+                <p>{{ food_calories[1]|int }} {{ count }}</p>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </form>
+          
+          
+        </div>
+        <div id="exercise">
+          <!-- Exercise -->
+          <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
+          
+            <div class="dropdown">
+              <p>Exercise Selection</p>
+              <input type="text" name="exercise" placeholder="Search" id="myExercise" onkeyup="filterE()" min="0" required>
+              <div id="myDropdown" class="dropdown-content">
+                {% for exercise_name in exercise_list %}
+                <a onclick="filterExercise('{{ exercise_name }}')">{{ exercise_name }}</a>
+                {% endfor %}
+              </div>
+              <p>How many minutes?</p>
+              <input type="number" name="minute" placeholder="Minutes" id="minute" min="0" required>
+            </div>
+          
+            <button class="dashboard-btn" type="submit" name="action" value="SUBMIT_EXERCISE">Submit</button>
+
+          {% if calorie_exercise_list|length > 0 %}
+          <div id="rectangle-box">
+            {% for exercise_calories in calorie_exercise_list %}
+            <div id="rectangle">
+              <p>{{ exercise_calories[0] }}</p>
+              <p>{{ exercise_calories[1]|int }} {{ count }}</p>
+            </div>
             {% endfor %}
           </div>
-          <p>How many ounces?</p>
-          <input type="number" name="ounce" placeholder="Ounce" id="ounce" step="0.1" min="0" required>
+          {% endif %}
+          </form>
         </div>
-
-          <button type="submit" name="action" value="SUBMIT">Submit</button>
-      </form>
-
-      {% if calorie_list|length > 0 %}
-      <div id="rectangle-box">
-        {% for calories in calorie_list %}
-          <div id="rectangle">
-            <!-- <p><span onclick="fn()">X</span>{{ calories[0] }}</p> -->
-            <p>{{ calories[0] }}</p>
-            <p>{{ calories[1]|int }} {{ count }}</p>
-          </div>
-        {% endfor %}
       </div>
-      {% endif %}
-      
+
     
     <form method="POST" action="{{ url_for('main.dashboard_buttons') }}">
       

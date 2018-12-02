@@ -1,0 +1,76 @@
+<!-- Shows signup form -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main">
+
+  <!-- Form container -->
+  <div class="form-container">
+    <div class="form-wrapper">
+
+      <div class="center">
+        <div class="form-header">
+          <h1><a href="{{ url_for("main.login") }}">CalPal</a></h1>
+          <h2>Managing Calories for Health Conscious People</h2>
+          <p>- Sign up -</p>
+        </div>
+      </div>
+
+      <!-- Error message appears -->
+      {% if loginFailure is defined %}
+      <div class="failure">
+        <p>This email is already used!</p>
+      </div>
+      {% endif %}
+
+      <!-- Form method="POST" -->
+      <form method="POST" action="{{ url_for("main.signup_redirect") }}">
+
+        <!-- Name Inputs: First and Last Name -->
+        <div class="name">
+        <!-- First Name -->
+          <div class="name-size">
+            <div class="input-label">
+              <label>First Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="fname" placeholder="First Name" spellcheck="false" autofocus required>
+          </div>
+
+        <!-- Last Name -->
+          <div class="name-size">
+            <div class="input-label">
+              <label>Last Name</label>
+              <span>•</span>
+            </div>
+            <input type="text" name="lname" placeholder="Last Name" spellcheck="false" required>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="input-label">
+          <label>Email Address</label>
+          <span>•</span>
+        </div>
+        <input type="email" name="email" placeholder="name@company.com" spellcheck="false" required>
+
+        <!-- Password -->
+        <div class="input-label">
+          <label>Password</label>
+          <span>•</span>
+        </div>
+        <input type="password" name="password" placeholder="Password" spellcheck="false" required>
+
+        <!-- Submit -->
+        <button type="submit">Sign up</button>
+
+      </form>
+
+      <p>Have an account? <a href="{{ url_for("main.login") }}">Sign in</a></p>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
