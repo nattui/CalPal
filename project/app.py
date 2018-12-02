@@ -30,7 +30,13 @@ main = Blueprint("main", __name__)
 def index():
     session["calorie_food_list"] = []
     session["calorie_exercise_list"] = []
+    session["count_food_calorie"] = 0
     session["count_exercise_calorie"] = 0
+    
+    # Retrieves the list of exercises and foods.
+    session["food_list"] = getFoodDatabase()[1]
+    session["exercise_list"] = getExerciseDatabase()[0]
+    
     return redirect(url_for('main.login'))
 
 
@@ -39,7 +45,13 @@ def index():
 def login():
     session["calorie_food_list"] = []
     session["calorie_exercise_list"] = []
+    session["count_food_calorie"] = 0
     session["count_exercise_calorie"] = 0
+    
+    # Retrieves the list of exercises and foods.
+    session["food_list"] = getFoodDatabase()[1]
+    session["exercise_list"] = getExerciseDatabase()[0]
+    
     return render_template("login.html")
 
 
@@ -272,11 +284,6 @@ def dashboard_buttons():
 
     total_calories = session["count_food_calorie"] - session["count_exercise_calorie"]
 
-
-    # Retrieves the list of exercises and foods.
-    session["food_list"] = getFoodDatabase()[1]
-    session["exercise_list"] = getExerciseDatabase()[0]
-
     return render_template("dashboard.html", 
                           fname          = session["fname"],
                           lname          = session["lname"], 
@@ -326,12 +333,6 @@ def update_user_info(updateSuccess = False, usedEmail = False):
   split_height  = splitHeight(int(session["height"]))
   height_feet   = split_height[0]
   height_inches = split_height[1]
-  
-  # ~ print(session["birth-day"])
-  # ~ print(session["birth-month"])
-  # ~ print(session["birth-year"])
-  # ~ print(height_feet)
-  # ~ print(height_inches)
   
   return render_template("update_user_info.html", 
                          fname         = session["fname"],
