@@ -1,0 +1,79 @@
+.dashboard {
+  margin-bottom: 150px; 
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#rectangle-box {
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#rectangle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 8% 0px 8%;
+  margin-bottom: 5px;
+  background: #ff882b;
+  width: 350px;
+  height: 40px;
+}
+
+#rectangle p, #rectangle-e p {
+  color:white;
+  font-weight: bolder;
+}
+
+#rectangle span {
+  color: red;
+  cursor: pointer;
+  position: relative;
+  right: 15px;
+  /* padding: 0px 8% 0px 0px; */
+}
+
+.form-container-dashboard {
+  margin-top: 4%;
+	border-radius: 5px;
+	background-color: #fba56730;
+	padding: 2.5% 0% 2.5% 0%;
+	text-align: center;
+	-webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 1000px;
+}
+
+#sidebyside {
+  display: flex;
+  position: relative;
+  right: 40px;
+}
+
+#food, #exercise {
+  margin:20px;
+}
+
+.dashboard-btn {
+  width:150px !important;
+}
+
+.form-container-dashboard h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.form-container-dashboard h2 {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 25px;
+}
