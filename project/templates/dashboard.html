@@ -2,7 +2,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 01.12.2018
+Revision: 02.12.2018
 
 The dashboard of CalPal. 
 -->
@@ -18,7 +18,7 @@ The dashboard of CalPal.
     <div class="form-wrapper">
 
       <div class="center">
-        <a href="{{ url_for('main.login') }}">
+        <a>
           <img src="../static/CalPal_logo_opaque.png" alt="The CalPal logo" width="450">
         </a>
       </div>
@@ -26,10 +26,25 @@ The dashboard of CalPal.
       <!-- Welcome message -->
       <p><h2>Welcome {{fname}} {{lname}}!</h2></p>
       <h2>{{formatted_date}}</h2>
-
-      {% if total_calories is defined %}
-        <h1>Calories gained: {{ total_calories }}</h1>
-      {% endif %}
+      
+      <div class="messages">
+        <!-- Calorie goal message -->
+        {% if met_calorie_goal %}
+          <div class="success">
+            <p>You have met your calorie goal today!</p>
+          </div>
+        {% endif %}
+        
+        <!-- Calories gained message -->
+        {% if total_calories >= 0 %}
+          <h1>Calories gained: {{ total_calories }}</h1>
+        {% endif %}
+        
+        <!-- Calories lost message -->
+        {% if total_calories < 0 %}
+          <h1>Calories lost: {{ total_calories * -1 }}</h1>
+        {% endif %}
+      </div>
 
       <!-- Food Searching -->
 
