@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 20.11.2018
+Revision: 02.12.2018
 
 module.py
 A Python module for extraneous functions and variables.
@@ -67,6 +67,21 @@ def splitHeight(total_height):
   
   return (feet, inches)
   
+
+def metCalorieGoal(calorie_difference, calorie_goal):
+  """
+  Returns whether a given calorie goal has been met given
+  a calorie difference and a calorie goal. 
+  """
+  
+  # The calorie goal is multiplied by negative one because
+  # it represents the number of calories lost. 
+  calorie_goal_neg = calorie_goal * -1
+  
+  # Returns whether or not the calorie difference is less
+  # than or equal to the negative calorie goal. 
+  return calorie_difference <= calorie_goal_neg
+
 
 #=======================================================================
 
