@@ -3,7 +3,7 @@
 CalPal: A calorie tracking app.
 Written by Nhat Nguyen and Albert Ong.
 CMPE 131
-Revision: 01.12.2018 
+Revision: 02.12.2018 
 
 app.py
 This is where the python flask code occupies
@@ -230,11 +230,13 @@ def dashboard():
   exercise_list = getExerciseDatabase()[0]
   
   return render_template("dashboard.html", 
-                         fname          = session["fname"],
-                         lname          = session["lname"], 
-                         formatted_date = formatted_date, 
-                         exercise_list  = exercise_list,
-                         food_list      = food_list)
+                         fname            = session["fname"],
+                         lname            = session["lname"], 
+                         formatted_date   = formatted_date, 
+                         exercise_list    = exercise_list,
+                         food_list        = food_list,
+                         total_calories   = 0, 
+                         met_calorie_goal = False)
 
 
 # Controls the buttons for the dashboard page. 
@@ -260,13 +262,13 @@ def dashboard_buttons():
     # Redirects to the login page. 
     return redirect(url_for("main.login"))
   
-  # If the sumbit button was pressed...
+  
+  # If the sumbit foods button was pressed...
   elif action_name == "SUBMIT_FOODS":
     
     # Retrieves the name of the food and the number of ounces consumed. 
     food = request.form["food"]
     ounce = request.form["ounce"]
-    
     
     calorie_food_list = session["calorie_food_list"]
     count_food_calorie = 0
@@ -281,21 +283,27 @@ def dashboard_buttons():
     for calories in calorie_food_list:
       count_food_calorie = count_food_calorie + int(calories[1])
       session["count_food_calorie"] = count_food_calorie
-
+    
+    # Calculates the difference between the number of calories gained
+    # and the number of calories burned. 
     total_calories = session["count_food_calorie"] - session["count_exercise_calorie"]
-
+    
+    # Calculates whether the user has met their calorie goal. 
+    met_calorie_goal = metCalorieGoal(total_calories, session["calorie-goal"])
+    
     return render_template("dashboard.html", 
-                          fname          = session["fname"],
-                          lname          = session["lname"], 
-                          formatted_date = session["foratted_date"],
-                          food_list      = session["food_list"], 
-                          exercise_list  = session["exercise_list"],
-                          calorie_food_list   = session["calorie_food_list"],
-                          calorie_exercise_list = session["calorie_exercise_list"],
-                          total_calories = int(total_calories))
+                           fname                 = session["fname"],
+                           lname                 = session["lname"], 
+                           formatted_date        = session["foratted_date"],
+                           food_list             = session["food_list"], 
+                           exercise_list         = session["exercise_list"],
+                           calorie_food_list     = session["calorie_food_list"],
+                           calorie_exercise_list = session["calorie_exercise_list"],
+                           total_calories        = int(total_calories), 
+                           met_calorie_goal      = met_calorie_goal)
 
 
-  # EXERCISE
+  # If the sumbit exercise button was pressed...
   elif action_name == "SUBMIT_EXERCISE":
     exercise = request.form["exercise"]
     minute = request.form["minute"]
@@ -312,17 +320,23 @@ def dashboard_buttons():
       count_exercise_calorie = count_exercise_calorie + int(calories[1])
       session["count_exercise_calorie"] = count_exercise_calorie
 
+    # Calculates the difference between the number of calories gained
+    # and the number of calories burned. 
     total_calories = session["count_food_calorie"] - session["count_exercise_calorie"]
-
+    
+    # Calculates whether the user has met their calorie goal. 
+    met_calorie_goal = metCalorieGoal(total_calories, session["calorie-goal"])
+    
     return render_template("dashboard.html", 
-                        fname          = session["fname"],
-                        lname          = session["lname"], 
-                        formatted_date = session["foratted_date"],
-                        food_list      = session["food_list"], 
-                        exercise_list  = session["exercise_list"],
-                        calorie_food_list = session["calorie_food_list"],
-                        calorie_exercise_list = session["calorie_exercise_list"],
-                        total_calories = int(total_calories))
+                          fname                 = session["fname"],
+                          lname                 = session["lname"], 
+                          formatted_date        = session["foratted_date"],
+                          food_list             = session["food_list"], 
+                          exercise_list         = session["exercise_list"],
+                          calorie_food_list     = session["calorie_food_list"],
+                          calorie_exercise_list = session["calorie_exercise_list"],
+                          total_calories        = int(total_calories), 
+                          met_calorie_goal      = met_calorie_goal)
 
 
 # The update user info page. 
