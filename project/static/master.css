@@ -2,7 +2,7 @@
  * CalPal: A calorie tracking app.
  * Written by Nhat Nguyen and Albert Ong.
  * CMPE 131
- * Revision: 01.12.2018
+ * Revision: 02.12.2018
  * 
  * master.css
  * The master stylesheet. Used in base.html 
@@ -177,8 +177,8 @@ form {
 
 /* Styles the failure message in the form container. */
 .form-container .failure {
-	border-radius: 2px;
 	background-color: #ff882b;
+	border-radius: 2px;
 	color: white;
 	height: 40px;
 	margin: 15px 0px 10px 0px;
@@ -194,6 +194,7 @@ form datalist,
 form input,
 form select,
 form select[type="gender"] {
+  background-color: white;
 	border: 1px solid #f0f0f0;
 	border-radius: 3px;
 	clear: left;

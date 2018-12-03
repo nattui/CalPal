@@ -1,3 +1,15 @@
+
+/*
+ * CalPal: A calorie tracking app.
+ * Written by Nhat Nguyen and Albert Ong.
+ * CMPE 131
+ * Revision: 02.12.2018
+ * 
+ * dashboard.css
+ * A stylesheet used specifically for dashboard.html
+*/
+
+
 .dashboard {
   margin-bottom: 150px; 
 }
@@ -69,11 +81,31 @@ input::-webkit-inner-spin-button {
 .form-container-dashboard h1 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin: 10px 0px 10px 0px;
 }
 
 .form-container-dashboard h2 {
   font-size: 20px;
   font-style: italic;
-  margin-bottom: 25px;
+  margin-bottom: 2px;
 }
+
+.form-container-dashboard .success {
+	background-color: #ff882b;
+	border-radius: 2px;
+	color: white;
+	height: 40px;
+  font-size: 18px;
+	margin: auto;
+  text-align: center;
+  width: 50%;
+}
+
+.form-container-dashboard .messages {
+  margin-top: 2em;;
+}
+
+.form-container-dashboard .success p {
+	padding-top: 0.5em;
+}
+
